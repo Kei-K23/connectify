@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id       String  @id @default(uuid())
+  username String  @unique
+  imageUrl String? @db.Text
+
+  bio  String?
+  link String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts      Post[]
+  members    Member[]
+  followers  Follow[] @relation("Follower")
+  followings Follow[] @relation("Following")
+  blockers   Block[]  @relation("Blocker")
+  blockings  Block[]  @relation("Blocking")
+}
+
+// e.g I follow to other user then I am follower and other user is following
+model Follow {
+  id String @id @default(uuid())
+
+  followerId String  @unique
+  follwer    Profile @relation("Follower", fields: [followerId], references: [id])
+
+  followingId String  @unique
+  following   Profile @relation("Following", fields: [followingId], references: [id])
+}
+
+// e.g I block to other user then I am blocker and other user is blocking
+model Block {
+  id String @id @default(uuid())
+
+  blockerId String  @unique
+  blocker   Profile @relation("Blocker", fields: [blockerId], references: [id])
+
+  blockingId String  @unique
+  blocking   Profile @relation("Blocking", fields: [blockingId], references: [id])
+}
+
+model Post {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  imageUrl String? @db.Text
+
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tags      Tag[]
+
+  @@index([profileId])
+}
+
+model Tag {
+  id   String @id @default(uuid())
+  name String
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: NoAction)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+}
+
+enum MemberType {
+  GUEST
+  ADMIN
+  MODERATOR
+}
+
+model Group {
+  id       String  @id @default(uuid())
+  name     String
+  imageUrl String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members Member[]
+}
+
+model Member {
+  id         String     @id @default(uuid())
+  memberType MemberType @default(GUEST)
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([groupId])
+}

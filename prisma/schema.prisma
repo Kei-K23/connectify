@@ -8,9 +8,11 @@ datasource db {
 }
 
 model Profile {
-  id       String  @id @default(uuid())
-  username String  @unique
-  imageUrl String? @db.Text
+  id             String  @id @default(uuid())
+  username       String  @unique
+  externalUserId String  @unique
+  imageUrl       String? @db.Text
+  email          String
 
   bio  String?
   link String?
@@ -78,9 +80,8 @@ model Tag {
 }
 
 enum MemberType {
-  GUEST
+  MEMBER
   ADMIN
-  MODERATOR
 }
 
 model Group {
@@ -96,7 +97,7 @@ model Group {
 
 model Member {
   id         String     @id @default(uuid())
-  memberType MemberType @default(GUEST)
+  memberType MemberType @default(MEMBER)
 
   groupId String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)

@@ -1,3 +1,6 @@
+import ActionTooltip from "@/components/action-tooltip";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/user-avatar";
 import { Profile } from "@prisma/client";
 import React from "react";
@@ -8,11 +11,18 @@ interface PostEntryProps {
 
 const PostEntry = ({ profile }: PostEntryProps) => {
   return (
-    <div>
-      <div>
-        <UserAvatar name={profile.username} src={profile.imageUrl} />
+    <>
+      <div className="flex justify-between">
+        <div className="flex items-center gap-x-4">
+          <UserAvatar name={profile.username} src={profile.imageUrl} />
+          <h2 className="text-muted-foreground">Start a post...</h2>
+        </div>
+        <ActionTooltip title="Create Post">
+          <Button className="rounded-[32px] text-[15px]">Post</Button>
+        </ActionTooltip>
       </div>
-    </div>
+      <Separator className="mt-4" />
+    </>
   );
 };
 

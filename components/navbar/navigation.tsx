@@ -13,6 +13,7 @@ interface NavigationProps {
 const Navigation = ({ profile }: NavigationProps) => {
   const { onOpen } = useModalStore();
   const pathname = usePathname();
+
   const navigation = [
     {
       href: "/",

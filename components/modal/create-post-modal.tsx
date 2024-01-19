@@ -75,7 +75,7 @@ const CreatePostModal = () => {
               />
               <DialogFooter className="mt-4">
                 <Button
-                  disabled={isPending || isImageUploading}
+                  disabled={!content || isPending || isImageUploading}
                   type="submit"
                   className="rounded-[32px] text-[15px]"
                 >

@@ -1,12 +1,12 @@
-import { UserButton } from "@clerk/nextjs";
+"use client";
+
+import { UserButton, useUser } from "@clerk/nextjs";
 import { User } from "lucide-react";
 import React from "react";
 
-interface UserActionProps {
-  isLoaded: boolean;
-}
+const UserAction = () => {
+  const { isLoaded } = useUser();
 
-const UserAction = ({ isLoaded }: UserActionProps) => {
   return isLoaded ? (
     <UserButton
       appearance={{

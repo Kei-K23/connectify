@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import Navbar from "@/components/navbar";
+import ModalProvider from "@/provider/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           >
             <Navbar />
             {children}
+            <ModalProvider />
           </ThemeProvider>
         </body>
       </html>

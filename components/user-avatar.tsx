@@ -11,16 +11,16 @@ interface UserAvatarProps {
 export function UserAvatar({ name, src, className }: UserAvatarProps) {
   if (!src) {
     return (
+      <div className="flex items-center justify-center w-[35px] h-[35px] rounded-full bg-black dark:bg-neutral-100 dark:text-black text-white">
+        <User className="w-6 h-6" />
+      </div>
+    );
+  } else {
+    return (
       <Avatar>
         <AvatarImage src={src!} alt={name} className={cn(className)} />
         <AvatarFallback>{name}</AvatarFallback>
       </Avatar>
-    );
-  } else {
-    return (
-      <div className="flex items-center justify-center w-[35px] h-[35px] rounded-full bg-black dark:bg-neutral-100 dark:text-black text-white">
-        <User className="w-6 h-6" />
-      </div>
     );
   }
 }

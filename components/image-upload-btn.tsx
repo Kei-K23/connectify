@@ -3,6 +3,7 @@ import { ImageIcon, Loader2Icon, XIcon } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface ImageUploadBtnProps {
   imageUrl: string;
@@ -61,7 +62,7 @@ const ImageUploadBtn = ({
           setImageUrl(res[0].url);
         }}
         onUploadError={(error: Error) => {
-          console.log(error);
+          toast.error("Try again! Could not upload image.");
         }}
       />
     );

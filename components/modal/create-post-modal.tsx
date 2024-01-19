@@ -12,9 +12,9 @@ import { UserAvatar } from "../user-avatar";
 import { Input } from "../ui/input";
 import ImageUploadBtn from "../image-upload-btn";
 import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 import { createPost } from "@/actions/post-action";
 import { toast } from "sonner";
+import VerticalSeparator from "../vertical-separator";
 
 const CreatePostModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -52,14 +52,13 @@ const CreatePostModal = () => {
         <DialogHeader>
           <DialogTitle className="text-center">New Post</DialogTitle>
         </DialogHeader>
-        <div className="relative flex gap-x-2 items-start">
-          <Separator
-            orientation="vertical"
-            className="absolute bg-zinc-700 left-[3%] w-[3px] h-[70%] mt-[50px]"
-          />
-          <UserAvatar name={profile.username} src={profile?.imageUrl} />
-          <div className="flex-1 flex flex-col items-start gap-y-1">
+        <div className="relative flex flex-col gap-x-2 items-start">
+          <div className="flex items-center gap-x-2">
+            <UserAvatar name={profile.username} src={profile?.imageUrl} />
             <h2>{profile.username}</h2>
+          </div>
+          <div className="relative flex flex-col pl-11 w-full mt-2">
+            <VerticalSeparator />
             <form className="w-full" onSubmit={onSubmit}>
               <Input
                 required

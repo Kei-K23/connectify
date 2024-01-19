@@ -22,10 +22,11 @@ model Profile {
 
   posts      Post[]
   members    Member[]
-  followers  Follow[] @relation("Follower")
-  followings Follow[] @relation("Following")
-  blockers   Block[]  @relation("Blocker")
-  blockings  Block[]  @relation("Blocking")
+  followers  Follow[]  @relation("Follower")
+  followings Follow[]  @relation("Following")
+  blockers   Block[]   @relation("Blocker")
+  blockings  Block[]   @relation("Blocking")
+  comments   Comment[]
 }
 
 // e.g I follow to other user then I am follower and other user is following
@@ -53,17 +54,35 @@ model Block {
 model Post {
   id      String @id @default(uuid())
   content String @db.Text
+  likes   Int    @default(0)
 
   imageUrl String? @db.Text
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   tags      Tag[]
+  comments  Comment[]
 
   @@index([profileId])
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  imageUrl String? @db.Text
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: NoAction)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Tag {

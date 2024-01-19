@@ -3,8 +3,15 @@ import { Heart, Home, Search, SquarePenIcon, User } from "lucide-react";
 import React from "react";
 import NavigationItem from "./navigation-item";
 import { usePathname } from "next/navigation";
+import { useModalStore } from "@/store/modal-store";
+import { ProfileWithPosts } from "@/type";
 
-const Navigation = () => {
+interface NavigationProps {
+  profile: ProfileWithPosts;
+}
+
+const Navigation = ({ profile }: NavigationProps) => {
+  const { onOpen } = useModalStore();
   const pathname = usePathname();
   const navigation = [
     {
@@ -22,8 +29,12 @@ const Navigation = () => {
       label: "Post",
       icon: SquarePenIcon,
       callback: () => {
-        // TODO :: Open modal to create post
-        console.log("hello");
+        onOpen({
+          type: "createPost",
+          data: {
+            profile,
+          },
+        });
       },
     },
     {

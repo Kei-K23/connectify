@@ -50,7 +50,17 @@ const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
         )}
 
         {profile.id === data.profileId && (
-          <DropdownMenuItem className="cursor-pointer flex gap-x-2 text-base text-rose-500 focus:text-rose-600">
+          <DropdownMenuItem
+            className="cursor-pointer flex gap-x-2 text-base text-rose-500 focus:text-rose-600"
+            onClick={() =>
+              onOpen({
+                type: "deletePost",
+                data: {
+                  post: data,
+                },
+              })
+            }
+          >
             <Trash2Icon className="w-4 h-4" />
             <span>Delete</span>
           </DropdownMenuItem>

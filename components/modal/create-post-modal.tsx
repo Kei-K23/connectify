@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { createPost } from "@/actions/post-action";
 import { toast } from "sonner";
 import VerticalSeparator from "../vertical-separator";
+import { Loader2 } from "lucide-react";
 
 const CreatePostModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -77,9 +78,16 @@ const CreatePostModal = () => {
                 <Button
                   disabled={!content || isPending || isImageUploading}
                   type="submit"
-                  className="rounded-[32px] text-[15px]"
+                  className="rounded-[32px] text-[15px] flex items-center gap-x-2"
                 >
-                  Post
+                  {isPending ? (
+                    <>
+                      <span>Posting...</span>
+                      <Loader2 className="w-4 h-5 text-muted-foreground animate-spin" />
+                    </>
+                  ) : (
+                    "Post"
+                  )}
                 </Button>
               </DialogFooter>
             </form>

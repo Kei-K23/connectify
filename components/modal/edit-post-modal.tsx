@@ -12,9 +12,10 @@ import { UserAvatar } from "../user-avatar";
 import { Input } from "../ui/input";
 import ImageUploadBtn from "../image-upload-btn";
 import { Button } from "../ui/button";
-import { createPost } from "@/actions/post-action";
+import { editPost } from "@/actions/post-action";
 import { toast } from "sonner";
 import VerticalSeparator from "../vertical-separator";
+import { Loader2 } from "lucide-react";
 
 const EditPostModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -26,7 +27,7 @@ const EditPostModal = () => {
 
   const isModalOpen = isOpen && type === "editPost";
 
-  if (!isModalOpen || !post || !post?.profile) {
+  if (!isModalOpen || !post || !post?.profile || !post?.id) {
     return null;
   }
 
@@ -35,9 +36,9 @@ const EditPostModal = () => {
     e.stopPropagation();
 
     startTransition(() => {
-      createPost({ content, imageUrl: imageUrl || null })
+      editPost({ content, imageUrl: imageUrl || null, id: post?.id! })
         .then(() => {
-          toast.success("New post created");
+          toast.success("Edited post");
           onClose();
           setImageUrl("");
           setContent("");
@@ -81,9 +82,16 @@ const EditPostModal = () => {
                 <Button
                   disabled={!content || isPending || isImageUploading}
                   type="submit"
-                  className="rounded-[32px] text-[15px]"
+                  className="rounded-[32px] text-[15px] flex items-center gap-x-2"
                 >
-                  Save
+                  {isPending ? (
+                    <>
+                      <span>Saving...</span>
+                      <Loader2 className="w-4 h-5 text-muted-foreground animate-spin" />
+                    </>
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               </DialogFooter>
             </form>

@@ -2,7 +2,7 @@ import { PostWithProfile } from "@/type";
 import { Profile } from "@prisma/client";
 import { create } from "zustand";
 
-type ModalType = "createPost" | "editPost";
+type ModalType = "createPost" | "editPost" | "deletePost";
 
 interface ModalStoreData {
   profile?: Profile;

@@ -7,9 +7,14 @@ import Image from "next/image";
 interface ImageUploadBtnProps {
   imageUrl: string;
   setImageUrl: (imageUrl: string) => void;
+  setIsImageUploading: (value: boolean) => void;
 }
 
-const ImageUploadBtn = ({ imageUrl, setImageUrl }: ImageUploadBtnProps) => {
+const ImageUploadBtn = ({
+  imageUrl,
+  setImageUrl,
+  setIsImageUploading,
+}: ImageUploadBtnProps) => {
   if (imageUrl) {
     return (
       <div className="relative w-full h-[250px] rounded-lg mt-4">
@@ -50,7 +55,9 @@ const ImageUploadBtn = ({ imageUrl, setImageUrl }: ImageUploadBtnProps) => {
           },
         }}
         endpoint="imageUploader"
+        onUploadBegin={() => setIsImageUploading(true)}
         onClientUploadComplete={(res) => {
+          setIsImageUploading(false);
           setImageUrl(res[0].url);
         }}
         onUploadError={(error: Error) => {

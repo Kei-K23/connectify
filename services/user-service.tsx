@@ -14,6 +14,9 @@ export async function getCurrentUser() {
         externalUserId: user?.id,
         username: user.username,
       },
+      include: {
+        posts: true,
+      },
     });
     return profile;
   } catch (e: any) {

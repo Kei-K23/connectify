@@ -17,7 +17,6 @@ body,
   display: none;
 }
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -91,7 +90,4 @@ body,
     @apply bg-background text-foreground;
   }
 
-  .hide-ring {
-    @apply focus-within:right-0 focus-within:ring-offset-0
-  }
 }

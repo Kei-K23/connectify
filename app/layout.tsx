@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import Navbar from "@/components/navbar";
 import ModalProvider from "@/provider/modal-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           >
             <Navbar />
             {children}
+            <Toaster />
             <ModalProvider />
           </ThemeProvider>
         </body>

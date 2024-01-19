@@ -56,6 +56,9 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     await db.profile.create({
       data: {
+        name: payload.data.last_name
+          ? `${payload.data.first_name} ${payload.data.last_name}`
+          : payload.data.first_name,
         externalUserId: payload.data.id,
         username: payload.data.username,
         imageUrl: payload.data.image_url,
@@ -70,6 +73,9 @@ export async function POST(req: Request) {
         externalUserId: payload.data.id,
       },
       data: {
+        name: payload.data.last_name
+          ? `${payload.data.first_name} ${payload.data.last_name}`
+          : payload.data.first_name,
         username: payload.data.username,
         imageUrl: payload.data.image_url,
         email: payload.data.email_addresses[0].email_address,

@@ -7,7 +7,14 @@ export async function getAllPosts() {
         updatedAt: "desc",
       },
       include: {
-        profile: true,
+        profile: {
+          include: {
+            followers: true,
+            followings: true,
+          },
+        },
+        comments: true,
+        likes: true,
       },
     });
   } catch (e: any) {

@@ -22,7 +22,7 @@ const PostItemBody = ({ data }: PostItemBodyProps) => {
     },
   ];
   return (
-    <div className="relative flex flex-col pl-11 w-full ">
+    <div className="relative flex flex-col pl-12 w-full ">
       <VerticalSeparator />
       <p>{data.content}</p>
       {data.imageUrl && (

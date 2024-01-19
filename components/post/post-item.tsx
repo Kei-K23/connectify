@@ -1,12 +1,15 @@
-import { PostWithProfile, ProfileWithPosts } from "@/type";
+import {
+  PostWithAll,
+  ProfileWithFollowersAndFollowingsWithPosts,
+} from "@/type";
 import React from "react";
 import { Separator } from "../ui/separator";
 import PostItemHeader from "./post-item-header";
 import PostItemBody from "./post-item-body";
 
 interface PostItemProps {
-  data: PostWithProfile;
-  profile: ProfileWithPosts;
+  data: PostWithAll;
+  profile: ProfileWithFollowersAndFollowingsWithPosts;
 }
 
 const PostItem = ({ data, profile }: PostItemProps) => {

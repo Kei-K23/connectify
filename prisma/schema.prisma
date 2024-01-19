@@ -9,6 +9,7 @@ datasource db {
 
 model Profile {
   id             String  @id @default(uuid())
+  name           String
   username       String  @unique
   externalUserId String  @unique
   imageUrl       String? @db.Text
@@ -27,6 +28,8 @@ model Profile {
   blockers   Block[]   @relation("Blocker")
   blockings  Block[]   @relation("Blocking")
   comments   Comment[]
+  likes      Like[]
+  mutes      Mute[]
 }
 
 // e.g I follow to other user then I am follower and other user is following
@@ -54,7 +57,6 @@ model Block {
 model Post {
   id      String @id @default(uuid())
   content String @db.Text
-  likes   Int    @default(0)
 
   imageUrl String? @db.Text
 
@@ -65,7 +67,21 @@ model Post {
   updatedAt DateTime  @updatedAt
   tags      Tag[]
   comments  Comment[]
+  likes     Like[]
+  mutes     Mute[]
 
+  @@index([profileId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([postId])
   @@index([profileId])
 }
 
@@ -96,6 +112,21 @@ model Tag {
   updatedAt DateTime @updatedAt
 
   @@index([postId])
+}
+
+model Mute {
+  id String @id @default(uuid())
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: NoAction)
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+  @@index([profileId])
 }
 
 enum MemberType {

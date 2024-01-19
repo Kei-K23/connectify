@@ -16,6 +16,8 @@ export async function getCurrentUser() {
       },
       include: {
         posts: true,
+        followers: true,
+        followings: true,
       },
     });
     return profile;

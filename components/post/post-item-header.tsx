@@ -1,14 +1,16 @@
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { UserAvatar } from "../user-avatar";
-import { Button } from "../ui/button";
-import { MoreVerticalIcon } from "lucide-react";
-import { PostWithProfile, ProfileWithPosts } from "@/type";
+import {
+  PostWithAll,
+  ProfileWithFollowersAndFollowingsWithPosts,
+} from "@/type";
 import PostItemActions from "./post-item-actions";
+import PostUserHoverCard from "./post-user-hover-card";
 
 interface PostItemHeaderProps {
-  data: PostWithProfile;
-  profile: ProfileWithPosts;
+  data: PostWithAll;
+  profile: ProfileWithFollowersAndFollowingsWithPosts;
 }
 
 const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {
@@ -18,9 +20,7 @@ const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {
       <div className="flex-1 flex flex-col items-start gap-y-1">
         <div className="flex justify-between items-start w-full">
           <div>
-            <h2 className="hover:underline transition-all cursor-pointer font-bold">
-              {data.profile.username}
-            </h2>
+            <PostUserHoverCard profile={data.profile} />
           </div>
           <div className="flex items-center gap-x-2">
             <p className="text-muted-foreground">

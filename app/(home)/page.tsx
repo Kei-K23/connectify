@@ -15,7 +15,7 @@ const HomePage = async () => {
       {posts.length ? (
         <div className="space-y-5 mt-4">
           {posts.map((post) => (
-            <PostItem key={post.id} data={post} />
+            <PostItem key={post.id} data={post} profile={profile!} />
           ))}
         </div>
       ) : (

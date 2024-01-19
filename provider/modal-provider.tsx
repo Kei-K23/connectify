@@ -1,5 +1,7 @@
 "use client";
+import ConfirmModal from "@/components/modal/confirm-modal";
 import CreatePostModal from "@/components/modal/create-post-modal";
+import EditPostModal from "@/components/modal/edit-post-modal";
 import React, { useEffect, useState } from "react";
 
 const ModalProvider = () => {
@@ -16,6 +18,7 @@ const ModalProvider = () => {
   return (
     <>
       <CreatePostModal />
+      <EditPostModal />
     </>
   );
 };

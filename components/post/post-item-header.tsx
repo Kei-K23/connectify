@@ -3,13 +3,15 @@ import React from "react";
 import { UserAvatar } from "../user-avatar";
 import { Button } from "../ui/button";
 import { MoreVerticalIcon } from "lucide-react";
-import { PostWithProfile } from "@/type";
+import { PostWithProfile, ProfileWithPosts } from "@/type";
+import PostItemActions from "./post-item-actions";
 
 interface PostItemHeaderProps {
   data: PostWithProfile;
+  profile: ProfileWithPosts;
 }
 
-const PostItemHeader = ({ data }: PostItemHeaderProps) => {
+const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {
   return (
     <div className="flex w-full gap-x-2">
       <UserAvatar name={data.profile.username} src={data.profile.imageUrl} />
@@ -24,9 +26,7 @@ const PostItemHeader = ({ data }: PostItemHeaderProps) => {
             <p className="text-muted-foreground">
               {formatDistanceToNow(data.createdAt, { addSuffix: true })}
             </p>
-            <Button size={"sm"} variant={"ghost"}>
-              <MoreVerticalIcon className="w-4 h-4" />
-            </Button>
+            <PostItemActions data={data} profile={profile} />
           </div>
         </div>
       </div>

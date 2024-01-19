@@ -13,11 +13,12 @@ interface PostEntryProps {
 
 const PostEntry = ({ profile }: PostEntryProps) => {
   const { onOpen } = useModalStore();
+
   return (
     <>
       <div className="flex justify-between">
         <div className="flex items-center gap-x-4">
-          <UserAvatar name={profile.username} src={profile.imageUrl} />
+          <UserAvatar name={profile?.username} src={profile?.imageUrl} />
           <h2 className="text-muted-foreground">Start a post...</h2>
         </div>
         <ActionTooltip title="Create Post">

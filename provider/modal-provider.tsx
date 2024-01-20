@@ -2,7 +2,7 @@
 import CreatePostModal from "@/components/modal/create-post-modal";
 import DeletePostModal from "@/components/modal/delete-post-modal";
 import EditPostModal from "@/components/modal/edit-post-modal";
-import PostCommandModal from "@/components/modal/post-command-modal";
+import PostReplyModal from "@/components/modal/post-reply-modal";
 import React, { useEffect, useState } from "react";
 
 const ModalProvider = () => {
@@ -21,7 +21,7 @@ const ModalProvider = () => {
       <CreatePostModal />
       <EditPostModal />
       <DeletePostModal />
-      <PostCommandModal />
+      <PostReplyModal />
     </>
   );
 };

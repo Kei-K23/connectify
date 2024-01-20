@@ -6,10 +6,10 @@ interface PostItemBodyStatusProps {
 }
 
 const PostItemBodyStatus = ({ data }: PostItemBodyStatusProps) => {
-  const commentLabel =
-    data.comments.length > 1
-      ? `${data.comments.length} replies`
-      : `${data.comments.length} reply`;
+  const replayLabel =
+    data.replies.length > 1
+      ? `${data.replies.length} replies`
+      : `${data.replies.length} reply`;
 
   const likeLabel =
     data.likes.length > 1
@@ -19,7 +19,7 @@ const PostItemBodyStatus = ({ data }: PostItemBodyStatusProps) => {
   return (
     <div className="mt-3">
       <p className="text-muted-foreground">
-        {likeLabel} . {commentLabel}
+        {likeLabel} . {replayLabel}
       </p>
     </div>
   );

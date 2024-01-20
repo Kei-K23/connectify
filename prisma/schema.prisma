@@ -23,11 +23,11 @@ model Profile {
 
   posts      Post[]
   members    Member[]
-  followers  Follow[]  @relation("Follower")
-  followings Follow[]  @relation("Following")
-  blockers   Block[]   @relation("Blocker")
-  blockings  Block[]   @relation("Blocking")
-  comments   Comment[]
+  followers  Follow[] @relation("Follower")
+  followings Follow[] @relation("Following")
+  blockers   Block[]  @relation("Blocker")
+  blockings  Block[]  @relation("Blocking")
+  replies    Reply[]
   likes      Like[]
   mutes      Mute[]
 }
@@ -63,10 +63,10 @@ model Post {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   tags      Tag[]
-  comments  Comment[]
+  replies   Reply[]
   likes     Like[]
   mutes     Mute[]
 
@@ -85,7 +85,7 @@ model Like {
   @@index([profileId])
 }
 
-model Comment {
+model Reply {
   id      String @id @default(uuid())
   content String @db.Text
 

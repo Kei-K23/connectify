@@ -13,7 +13,7 @@ export async function getAllPosts() {
             followings: true,
           },
         },
-        comments: true,
+        replies: true,
         likes: true,
       },
     });

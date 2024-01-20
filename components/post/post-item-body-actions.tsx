@@ -29,12 +29,12 @@ const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
     },
     {
       icon: MessageCircle,
-      label: "Comment",
+      label: "Reply",
       callback: () => {
         console.log("click");
 
         onOpen({
-          type: "commandPost",
+          type: "replyPost",
           data: {
             post: data,
             profile: profile,

@@ -21,7 +21,7 @@ export async function getCurrentUser() {
         likes: true,
         blockers: true,
         blockings: true,
-        comments: true,
+        replies: true,
         mutes: true,
       },
     });

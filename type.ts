@@ -1,11 +1,11 @@
 import {
   Block,
-  Comment,
   Follow,
   Like,
   Mute,
   Post,
   Profile,
+  Reply,
 } from "@prisma/client";
 
 export type PostWithProfile = Post & { profile: Profile };
@@ -15,7 +15,7 @@ export type PostWithAll = Post & {
     followings: Follow[];
   };
   likes: Like[];
-  comments: Comment[];
+  replies: Reply[];
 };
 export type ProfileWithPosts = Profile & { posts: Post[] };
 export type ProfileWithFollowersAndFollowingsWithPosts = Profile & {
@@ -31,6 +31,6 @@ export type ProfileWithAll = Profile & {
   likes: Like[];
   blockers: Block[];
   blockings: Block[];
-  comments: Comment[];
+  replies: Reply[];
   mutes: Mute[];
 };

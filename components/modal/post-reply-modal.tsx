@@ -17,8 +17,9 @@ import VerticalSeparator from "../vertical-separator";
 import { Loader2 } from "lucide-react";
 import PostItemHeader from "../post/post-item-header";
 import PostItemBody from "../post/post-item-body";
+import { createReply } from "@/actions/reply-action";
 
-const PostCommandModal = () => {
+const PostReplyModal = () => {
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, onClose, data } = useModalStore();
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -27,7 +28,7 @@ const PostCommandModal = () => {
   const post = data?.post;
   const profile = data?.profile;
 
-  const isModalOpen = isOpen && type === "commandPost";
+  const isModalOpen = isOpen && type === "replyPost";
 
   if (!isModalOpen || !post || !post?.profile || !post?.id || !profile) {
     return null;
@@ -36,6 +37,17 @@ const PostCommandModal = () => {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     e.stopPropagation();
+
+    startTransition(() => {
+      createReply({ content, imageUrl: imageUrl || null, postId: post?.id! })
+        .then(() => {
+          toast.success("Created reply");
+          onClose();
+          setImageUrl("");
+          setContent("");
+        })
+        .catch(() => toast.error("Something went wrong"));
+    });
   }
 
   return (
@@ -98,4 +110,4 @@ const PostCommandModal = () => {
   );
 };
 
-export default PostCommandModal;
+export default PostReplyModal;

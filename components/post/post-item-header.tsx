@@ -1,16 +1,13 @@
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { UserAvatar } from "../user-avatar";
-import {
-  PostWithAll,
-  ProfileWithFollowersAndFollowingsWithPosts,
-} from "@/type";
+import { PostWithAll, ProfileWithAll } from "@/type";
 import PostItemActions from "./post-item-actions";
 import PostUserHoverCard from "./post-user-hover-card";
 
 interface PostItemHeaderProps {
   data: PostWithAll;
-  profile: ProfileWithFollowersAndFollowingsWithPosts;
+  profile: ProfileWithAll;
 }
 
 const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {

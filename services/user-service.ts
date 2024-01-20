@@ -18,6 +18,11 @@ export async function getCurrentUser() {
         posts: true,
         followers: true,
         followings: true,
+        likes: true,
+        blockers: true,
+        blockings: true,
+        comments: true,
+        mutes: true,
       },
     });
     return profile;

@@ -1,28 +1,16 @@
 "use client";
-import { PostWithProfile } from "@/type";
+import { PostWithProfile, ProfileWithAll } from "@/type";
 import Image from "next/image";
 import React from "react";
 import VerticalSeparator from "../vertical-separator";
-import { HeartIcon, MessageCircle } from "lucide-react";
-import { Button } from "../ui/button";
+import PostItemBodyActions from "./post-item-body-actions";
 
 interface PostItemBodyProps {
   data: PostWithProfile;
+  profile: ProfileWithAll;
 }
 
-const PostItemBody = ({ data }: PostItemBodyProps) => {
-  const postActions = [
-    {
-      icon: HeartIcon,
-      label: "Like",
-      callback: () => {},
-    },
-    {
-      icon: MessageCircle,
-      label: "Comment",
-      callback: () => {},
-    },
-  ];
+const PostItemBody = ({ data, profile }: PostItemBodyProps) => {
   return (
     <div className="relative flex flex-col pl-12 w-full ">
       <VerticalSeparator />
@@ -37,16 +25,7 @@ const PostItemBody = ({ data }: PostItemBodyProps) => {
           />
         </div>
       )}
-      <div className="flex items-center gap-x-2 mt-3">
-        {postActions.map((a) => {
-          const Icon = a.icon;
-          return (
-            <Button key={a.label} variant={"ghost"} size={"xs"}>
-              <Icon className="w-6 h-6  stroke-rose-500 fill-rose-500" />
-            </Button>
-          );
-        })}
-      </div>
+      <PostItemBodyActions profile={profile} data={data} />
     </div>
   );
 };

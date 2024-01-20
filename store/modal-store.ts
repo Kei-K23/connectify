@@ -1,13 +1,12 @@
-import { PostWithProfile } from "@/type";
-import { Profile } from "@prisma/client";
+import { PostWithAll, ProfileWithAll } from "@/type";
 import { create } from "zustand";
 
-type ModalType = "createPost" | "editPost" | "deletePost";
+type ModalType = "createPost" | "editPost" | "deletePost" | "commandPost";
 
 interface ModalStoreData {
-  profile?: Profile;
+  profile?: ProfileWithAll;
   confirm?: boolean;
-  post?: PostWithProfile;
+  post?: PostWithAll;
 }
 
 interface UseModalStore {

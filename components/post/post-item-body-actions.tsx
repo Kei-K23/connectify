@@ -3,18 +3,20 @@
 import React, { useTransition } from "react";
 import { HeartIcon, MessageCircle } from "lucide-react";
 import { Button } from "../ui/button";
-import { PostWithProfile, ProfileWithAll } from "@/type";
+import { PostWithAll, ProfileWithAll } from "@/type";
 import { cn } from "@/lib/utils";
 import { likeToggle } from "@/actions/like-action";
 import { toast } from "sonner";
+import { useModalStore } from "@/store/modal-store";
 
 interface PostItemBodyActionsProps {
   profile: ProfileWithAll;
-  data: PostWithProfile;
+  data: PostWithAll;
 }
 
 const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
   const [isPending, startTransition] = useTransition();
+  const { onOpen } = useModalStore();
   const postActions = [
     {
       icon: HeartIcon,
@@ -28,7 +30,17 @@ const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
     {
       icon: MessageCircle,
       label: "Comment",
-      callback: () => {},
+      callback: () => {
+        console.log("click");
+
+        onOpen({
+          type: "commandPost",
+          data: {
+            post: data,
+            profile: profile,
+          },
+        });
+      },
     },
   ];
 
@@ -60,7 +72,12 @@ const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
         } else {
           // other action buttons
           return (
-            <Button key={a.label} variant={"ghost"} size={"xs"}>
+            <Button
+              key={a.label}
+              variant={"ghost"}
+              size={"xs"}
+              onClick={a.callback}
+            >
               <Icon className={cn("w-6 h-6 ")} />
             </Button>
           );

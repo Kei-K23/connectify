@@ -9,9 +9,16 @@ import PostItemBodyStatus from "./post-item-body-status";
 interface PostItemBodyProps {
   data: PostWithAll;
   profile: ProfileWithAll;
+  showActions?: boolean;
+  showStatus?: boolean;
 }
 
-const PostItemBody = ({ data, profile }: PostItemBodyProps) => {
+const PostItemBody = ({
+  data,
+  profile,
+  showActions = true,
+  showStatus = true,
+}: PostItemBodyProps) => {
   return (
     <div className="relative flex flex-col pl-12 w-full ">
       <VerticalSeparator />
@@ -26,10 +33,12 @@ const PostItemBody = ({ data, profile }: PostItemBodyProps) => {
           />
         </div>
       )}
+
       {/* like and comment btn , etc  */}
-      <PostItemBodyActions profile={profile} data={data} />
+      {showActions && <PostItemBodyActions profile={profile} data={data} />}
+
       {/* like and comment indicator */}
-      <PostItemBodyStatus data={data} />
+      {showStatus && <PostItemBodyStatus data={data} />}
     </div>
   );
 };

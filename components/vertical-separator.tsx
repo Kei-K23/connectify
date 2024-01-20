@@ -6,7 +6,7 @@ const VerticalSeparator = () => {
   return (
     <Separator
       orientation="vertical"
-      className={cn("absolute bg-zinc-700 left-[2.7%] w-[2px] h-[100%] top-3")}
+      className={cn("absolute bg-zinc-700 left-[2.9%] w-[2px] h-[100%] top-3")}
     />
   );
 };

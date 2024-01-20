@@ -1,12 +1,13 @@
 "use client";
-import { PostWithProfile, ProfileWithAll } from "@/type";
+import { PostWithAll, ProfileWithAll } from "@/type";
 import Image from "next/image";
 import React from "react";
 import VerticalSeparator from "../vertical-separator";
 import PostItemBodyActions from "./post-item-body-actions";
+import PostItemBodyStatus from "./post-item-body-status";
 
 interface PostItemBodyProps {
-  data: PostWithProfile;
+  data: PostWithAll;
   profile: ProfileWithAll;
 }
 
@@ -25,7 +26,10 @@ const PostItemBody = ({ data, profile }: PostItemBodyProps) => {
           />
         </div>
       )}
+      {/* like and comment btn , etc  */}
       <PostItemBodyActions profile={profile} data={data} />
+      {/* like and comment indicator */}
+      <PostItemBodyStatus data={data} />
     </div>
   );
 };

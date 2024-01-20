@@ -13,7 +13,7 @@ const HomePage = async () => {
       <PostEntry profile={profile!} />
 
       {posts.length ? (
-        <div className="space-y-5 mt-4">
+        <div className="space-y-8 mt-4">
           {posts.map((post) => (
             <PostItem key={post.id} data={post} profile={profile!} />
           ))}

@@ -35,7 +35,6 @@ export default function RootLayout({
             forcedTheme="dark"
             storageKey="connectify-theme"
           >
-            <Navbar />
             {children}
             <Toaster />
             <ModalProvider />

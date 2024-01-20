@@ -8,8 +8,8 @@ const Navbar = async () => {
   const profile = await getCurrentUser();
 
   return (
-    <header className="fixed top-0 h-[75px] w-full">
-      <nav className="bg-black/90 h-full flex items-center justify-between px-8 lg:px-32 xl:px-40 border-b">
+    <header className="fixed top-0 h-[75px] w-full z-50">
+      <nav className="bg-black/90 h-full flex items-center justify-between px-8 lg:px-32 xl:px-40 border-b ">
         <Logo />
         <Navigation profile={profile!} />
         <UserAction />

@@ -16,11 +16,15 @@ interface PostItemHeaderProps {
 const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {
   return (
     <div className="flex w-full gap-x-2">
-      <UserAvatar name={data.profile.username} src={data.profile.imageUrl} />
+      <UserAvatar
+        name={data.profile.username}
+        src={data.profile.imageUrl}
+        showFollow={profile.username !== data.profile.username}
+      />
       <div className="flex-1 flex flex-col items-start gap-y-1">
         <div className="flex justify-between items-start w-full">
           <div>
-            <PostUserHoverCard profile={data.profile} />
+            <PostUserHoverCard profile={profile} data={data} />
           </div>
           <div className="flex items-center gap-x-2">
             <p className="text-muted-foreground">

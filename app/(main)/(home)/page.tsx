@@ -9,7 +9,7 @@ const HomePage = async () => {
   const posts = await getAllPosts();
 
   return (
-    <div className="mt-[75px] pt-8 mx-auto px-8 md:max-w-[650px] lg:max-w-[700px]">
+    <>
       <PostEntry profile={profile!} />
 
       {posts.length ? (
@@ -21,7 +21,7 @@ const HomePage = async () => {
       ) : (
         <h2 className="text-center text-muted-foreground mt-4">No posts.</h2>
       )}
-    </div>
+    </>
   );
 };
 

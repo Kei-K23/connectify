@@ -1,27 +1,32 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { MouseEvent, useTransition } from "react";
 import { HeartIcon, MessageCircle } from "lucide-react";
 import { Button } from "../ui/button";
-import { PostWithAll, ProfileWithAll } from "@/type";
+import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
 import { cn } from "@/lib/utils";
 import { likeToggle } from "@/actions/like-action";
 import { toast } from "sonner";
 import { useModalStore } from "@/store/modal-store";
 
-interface PostItemBodyActionsProps {
+interface PostItemBodyActionsProps<T extends PostWithAll | ReplyWithAll> {
   profile: ProfileWithAll;
-  data: PostWithAll;
+  data: T;
 }
 
-const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
+const PostItemBodyActions = <T extends PostWithAll | ReplyWithAll>({
+  profile,
+  data,
+}: PostItemBodyActionsProps<T>) => {
   const [isPending, startTransition] = useTransition();
   const { onOpen } = useModalStore();
   const postActions = [
     {
       icon: HeartIcon,
       label: "Like",
-      callback: () => {
+      callback: (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+
         startTransition(() => {
           likeToggle(data.id).catch(() => toast.error("Something went wrong!"));
         });
@@ -30,13 +35,14 @@ const PostItemBodyActions = ({ profile, data }: PostItemBodyActionsProps) => {
     {
       icon: MessageCircle,
       label: "Reply",
-      callback: () => {
-        console.log("click");
+      callback: (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
 
+        // TODO: need to improve type
         onOpen({
           type: "replyPost",
           data: {
-            post: data,
+            post: data as PostWithAll,
             profile: profile,
           },
         });

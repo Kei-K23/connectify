@@ -1,20 +1,27 @@
-import { PostWithAll } from "@/type";
+import { PostWithAll, ReplyWithAll } from "@/type";
 import React from "react";
 
-interface PostItemBodyStatusProps {
-  data: PostWithAll;
+interface PostItemBodyStatusProps<T extends PostWithAll | ReplyWithAll> {
+  data: T;
 }
 
-const PostItemBodyStatus = ({ data }: PostItemBodyStatusProps) => {
-  const replayLabel =
-    data.replies.length > 1
-      ? `${data.replies.length} replies`
-      : `${data.replies.length} reply`;
+const PostItemBodyStatus = <T extends PostWithAll | ReplyWithAll>({
+  data,
+}: PostItemBodyStatusProps<T>) => {
+  let replayLabel, likeLabel;
+  if ("replies" in data) {
+    replayLabel =
+      data.replies.length > 1
+        ? `${data.replies.length} replies`
+        : `${data.replies.length} reply`;
+  }
 
-  const likeLabel =
-    data.likes.length > 1
-      ? `${data.likes.length} likes`
-      : `${data.likes.length} like`;
+  if ("likes" in data) {
+    likeLabel =
+      data.likes.length > 1
+        ? `${data.likes.length} likes`
+        : `${data.likes.length} like`;
+  }
 
   return (
     <div className="mt-3">

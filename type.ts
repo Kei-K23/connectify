@@ -34,3 +34,10 @@ export type ProfileWithAll = Profile & {
   replies: Reply[];
   mutes: Mute[];
 };
+
+export type ReplyWithAll = Reply & {
+  profile: Profile & {
+    followers: Follow[];
+    followings: Follow[];
+  };
+};

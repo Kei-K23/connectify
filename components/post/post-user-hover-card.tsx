@@ -10,17 +10,20 @@ import { UserAvatar } from "../user-avatar";
 import { Follow, Profile } from "@prisma/client";
 import { Button } from "../ui/button";
 import { UserPlusIcon } from "lucide-react";
-import { PostWithAll } from "@/type";
+import { PostWithAll, ReplyWithAll } from "@/type";
 
-interface PostUserHoverCardProps {
+interface PostUserHoverCardProps<T extends PostWithAll | ReplyWithAll> {
   profile: Profile & {
     followers: Follow[];
     followings: Follow[];
   };
-  data: PostWithAll;
+  data: T;
 }
 
-const PostUserHoverCard = ({ profile, data }: PostUserHoverCardProps) => {
+const PostUserHoverCard = <T extends PostWithAll | ReplyWithAll>({
+  profile,
+  data,
+}: PostUserHoverCardProps<T>) => {
   const otherProfile = data.profile.username !== profile.username;
   return (
     <HoverCard>

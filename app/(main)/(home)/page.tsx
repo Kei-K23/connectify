@@ -3,6 +3,7 @@ import PostEntry from "./_components/post-entry";
 import { getAllPosts } from "@/services/post-service";
 import { getCurrentUser } from "@/services/user-service";
 import PostItem from "@/components/post/post-item";
+import { PostWithAll } from "@/type";
 
 const HomePage = async () => {
   const profile = await getCurrentUser();
@@ -15,7 +16,11 @@ const HomePage = async () => {
       {posts.length ? (
         <div className="space-y-8 mt-4">
           {posts.map((post) => (
-            <PostItem key={post.id} data={post} profile={profile!} />
+            <PostItem<PostWithAll>
+              key={post.id}
+              data={post}
+              profile={profile!}
+            />
           ))}
         </div>
       ) : (

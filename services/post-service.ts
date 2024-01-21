@@ -21,3 +21,25 @@ export async function getAllPosts() {
     throw new Error("Internal server error!");
   }
 }
+
+export async function getPostById(id: string) {
+  try {
+    return await db.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        profile: {
+          include: {
+            followers: true,
+            followings: true,
+          },
+        },
+        replies: true,
+        likes: true,
+      },
+    });
+  } catch (e: any) {
+    throw new Error("Internal server error!");
+  }
+}

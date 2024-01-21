@@ -1,16 +1,19 @@
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { UserAvatar } from "../user-avatar";
-import { PostWithAll, ProfileWithAll } from "@/type";
+import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
 import PostItemActions from "./post-item-actions";
 import PostUserHoverCard from "./post-user-hover-card";
 
-interface PostItemHeaderProps {
-  data: PostWithAll;
+interface PostItemHeaderProps<T extends PostWithAll | ReplyWithAll> {
+  data: T;
   profile: ProfileWithAll;
 }
 
-const PostItemHeader = ({ data, profile }: PostItemHeaderProps) => {
+const PostItemHeader = <T extends PostWithAll | ReplyWithAll>({
+  data,
+  profile,
+}: PostItemHeaderProps<T>) => {
   return (
     <div className="flex w-full gap-x-2">
       <UserAvatar

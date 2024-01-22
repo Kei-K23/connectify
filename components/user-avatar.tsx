@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { PlusCircle, User } from "lucide-react";
 import { Button } from "./ui/button";
-import { PostWithAll } from "@/type";
 
 interface UserAvatarProps {
   name: string;

@@ -14,7 +14,7 @@ const HomePage = async () => {
       <PostEntry profile={profile!} />
 
       {posts.length ? (
-        <div className="space-y-8 mt-4">
+        <div className="space-y-8 mt-4 pb-14">
           {posts.map((post) => (
             <PostItem<PostWithAll>
               key={post.id}

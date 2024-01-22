@@ -2,8 +2,8 @@ import { db } from "@/lib/db";
 import { getCurrentUser } from "./user-service";
 
 export async function getAllPosts() {
-  const profile = await getCurrentUser();
   try {
+    const profile = await getCurrentUser();
     return await db.post.findMany({
       where: {
         mutes: {
@@ -35,9 +35,18 @@ export async function getAllPosts() {
 
 export async function getPostById(id: string) {
   try {
+    const profile = await getCurrentUser();
+
     return await db.post.findUnique({
       where: {
         id,
+        mutes: {
+          every: {
+            NOT: {
+              profileId: profile?.id,
+            },
+          },
+        },
       },
       include: {
         profile: {

@@ -12,12 +12,18 @@ import { useModalStore } from "@/store/modal-store";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { muteToggle } from "@/actions/mute-action";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 const MutePostModal = () => {
+  const params = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, data, onClose } = useModalStore();
   const post = data?.post;
   const isModalOpen = isOpen && type === "mutePost";
+  const isInsidePostIdPage =
+    `/${params?.username}/posts/${params?.postId}` === pathname;
 
   if (!isModalOpen || !post || !post?.profile || !post?.id) {
     return null;
@@ -28,6 +34,7 @@ const MutePostModal = () => {
       muteToggle(post?.id!)
         .then(() => {
           toast.success("Muted the post");
+          isInsidePostIdPage && router.push("/");
           onClose();
         })
         .catch(() => toast.error("Something went wrong"));

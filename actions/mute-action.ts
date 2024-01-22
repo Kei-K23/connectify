@@ -58,6 +58,7 @@ export async function muteToggle(postId: string) {
     }
 
     revalidatePath("/");
+    revalidatePath(`/${profile.username}/posts/${post.id}`);
   } catch (e: any) {
     throw new Error("Something went wrong");
   }

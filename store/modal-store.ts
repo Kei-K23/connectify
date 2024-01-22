@@ -1,7 +1,12 @@
 import { PostWithAll, ProfileWithAll } from "@/type";
 import { create } from "zustand";
 
-type ModalType = "createPost" | "editPost" | "deletePost" | "replyPost";
+type ModalType =
+  | "createPost"
+  | "editPost"
+  | "deletePost"
+  | "replyPost"
+  | "mutePost";
 
 interface ModalStoreData {
   profile?: ProfileWithAll;

@@ -10,14 +10,14 @@ import {
 import { Button } from "../ui/button";
 import { useModalStore } from "@/store/modal-store";
 import { toast } from "sonner";
-import { deletePost } from "@/actions/post-action";
 import { Loader2 } from "lucide-react";
+import { muteToggle } from "@/actions/mute-action";
 
-const DeletePostModal = () => {
+const MutePostModal = () => {
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, data, onClose } = useModalStore();
   const post = data?.post;
-  const isModalOpen = isOpen && type === "deletePost";
+  const isModalOpen = isOpen && type === "mutePost";
 
   if (!isModalOpen || !post || !post?.profile || !post?.id) {
     return null;
@@ -25,9 +25,9 @@ const DeletePostModal = () => {
 
   function onClick() {
     startTransition(() => {
-      deletePost({ id: post?.id! })
+      muteToggle(post?.id!)
         .then(() => {
-          toast.success("Deleted the post");
+          toast.success("Muted the post");
           onClose();
         })
         .catch(() => toast.error("Something went wrong"));
@@ -38,7 +38,7 @@ const DeletePostModal = () => {
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
       <DialogContent className="max-w-[280px]">
         <DialogHeader>
-          <DialogTitle className="text-center">Delete Post?</DialogTitle>
+          <DialogTitle className="text-center">Mute Post?</DialogTitle>
         </DialogHeader>
         <div className="mt-3 flex items-center justify-center gap-x-5">
           <Button disabled={isPending} variant={"ghost"}>
@@ -52,11 +52,11 @@ const DeletePostModal = () => {
           >
             {isPending ? (
               <>
-                <span>Deleting...</span>
+                <span>Loading...</span>
                 <Loader2 className="w-4 h-5 text-muted-foreground animate-spin" />
               </>
             ) : (
-              "Delete"
+              "Mute"
             )}
           </Button>
         </div>
@@ -65,4 +65,4 @@ const DeletePostModal = () => {
   );
 };
 
-export default DeletePostModal;
+export default MutePostModal;

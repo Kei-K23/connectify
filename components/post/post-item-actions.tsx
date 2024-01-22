@@ -9,12 +9,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Edit2Icon, MoreVerticalIcon, Trash2Icon } from "lucide-react";
+import {
+  Edit2Icon,
+  MessageSquareXIcon,
+  MoreVerticalIcon,
+  Trash2Icon,
+} from "lucide-react";
 import { useModalStore } from "@/store/modal-store";
-import { PostWithProfile, ProfileWithPosts } from "@/type";
+import { PostWithAll, ProfileWithPosts } from "@/type";
 
 interface PostItemActionsProps {
-  data: PostWithProfile;
+  data: PostWithAll;
   profile: ProfileWithPosts;
 }
 
@@ -63,6 +68,22 @@ const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
           >
             <Trash2Icon className="w-4 h-4" />
             <span>Delete</span>
+          </DropdownMenuItem>
+        )}
+        {profile.id !== data.profileId && (
+          <DropdownMenuItem
+            className="cursor-pointer flex gap-x-2 text-base"
+            onClick={() =>
+              onOpen({
+                type: "mutePost",
+                data: {
+                  post: data,
+                },
+              })
+            }
+          >
+            <MessageSquareXIcon className="w-4 h-4" />
+            <span>Mute</span>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

@@ -12,6 +12,7 @@ interface PostItemBodyProps<T extends PostWithAll | ReplyWithAll> {
   profile: ProfileWithAll;
   showActions?: boolean;
   showStatus?: boolean;
+  allowRouting?: boolean;
 }
 
 const PostItemBody = <T extends PostWithAll | ReplyWithAll>({
@@ -19,11 +20,15 @@ const PostItemBody = <T extends PostWithAll | ReplyWithAll>({
   profile,
   showActions = true,
   showStatus = true,
+  allowRouting = true,
 }: PostItemBodyProps<T>) => {
   const router = useRouter();
   return (
     <div
-      onClick={() => router.push(`/${data.profile.username}/posts/${data.id}`)}
+      onClick={() =>
+        allowRouting &&
+        router.push(`/${data.profile.username}/posts/${data.id}`)
+      }
       className="w-full cursor-pointer"
     >
       <div className="relative flex flex-col pl-12 w-full ">

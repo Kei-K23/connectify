@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { UserAvatar } from "@/components/user-avatar";
 import { useModalStore } from "@/store/modal-store";
-import { Profile } from "@prisma/client";
+import { ProfileWithAll } from "@/type";
 import React from "react";
 
 interface PostEntryProps {
-  profile: Profile;
+  profile: ProfileWithAll;
 }
 
 const PostEntry = ({ profile }: PostEntryProps) => {

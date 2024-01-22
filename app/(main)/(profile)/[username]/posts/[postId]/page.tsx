@@ -35,6 +35,9 @@ const PostIdPage = async ({ params }: PostIdPageProps) => {
               key={reply.id}
               data={reply}
               profile={profile!}
+              showActions={false}
+              showStatus={false}
+              allowRouting={false}
             />
           ))}
         </div>

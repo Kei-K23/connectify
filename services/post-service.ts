@@ -1,8 +1,19 @@
 import { db } from "@/lib/db";
+import { getCurrentUser } from "./user-service";
 
 export async function getAllPosts() {
+  const profile = await getCurrentUser();
   try {
     return await db.post.findMany({
+      where: {
+        mutes: {
+          every: {
+            NOT: {
+              profileId: profile?.id,
+            },
+          },
+        },
+      },
       orderBy: {
         updatedAt: "desc",
       },

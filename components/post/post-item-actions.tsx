@@ -16,14 +16,17 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import { useModalStore } from "@/store/modal-store";
-import { PostWithAll, ProfileWithPosts } from "@/type";
+import { PostWithAll, ProfileWithPosts, ReplyWithAll } from "@/type";
 
-interface PostItemActionsProps {
-  data: PostWithAll;
+interface PostItemActionsProps<T extends PostWithAll | ReplyWithAll> {
+  data: T;
   profile: ProfileWithPosts;
 }
 
-const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
+const PostItemActions = <T extends PostWithAll | ReplyWithAll>({
+  data,
+  profile,
+}: PostItemActionsProps<T>) => {
   const { onOpen } = useModalStore();
 
   return (
@@ -42,7 +45,7 @@ const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
                 onOpen({
                   type: "editPost",
                   data: {
-                    post: data,
+                    data: data,
                   },
                 })
               }
@@ -61,7 +64,7 @@ const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
               onOpen({
                 type: "deletePost",
                 data: {
-                  post: data,
+                  data: data,
                 },
               })
             }
@@ -77,7 +80,7 @@ const PostItemActions = ({ data, profile }: PostItemActionsProps) => {
               onOpen({
                 type: "mutePost",
                 data: {
-                  post: data,
+                  data: data,
                 },
               })
             }

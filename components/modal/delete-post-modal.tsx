@@ -20,7 +20,7 @@ const DeletePostModal = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, data, onClose } = useModalStore();
-  const post = data?.post;
+  const post = data?.data;
   const isModalOpen = isOpen && type === "deletePost";
   const isInsidePostIdPage =
     `/${params?.username}/posts/${params?.postId}` === pathname;

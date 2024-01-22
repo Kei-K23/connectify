@@ -14,12 +14,19 @@ const PostItemHeader = <T extends PostWithAll | ReplyWithAll>({
   data,
   profile,
 }: PostItemHeaderProps<T>) => {
+  const isAlreadyFollow = profile.followers.some(
+    (f) => f.followingId === data.profileId
+  );
+
   return (
     <div className="flex w-full gap-x-2">
       <UserAvatar
         name={data.profile.username}
         src={data.profile.imageUrl}
         showFollow={profile?.username !== data.profile.username}
+        isAlreadyFollow={isAlreadyFollow}
+        data={data}
+        profile={profile}
       />
       <div className="flex-1 flex flex-col items-start gap-y-1">
         <div className="flex justify-between items-start w-full">

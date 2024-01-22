@@ -1,4 +1,4 @@
-import { PostWithAll, ProfileWithAll } from "@/type";
+import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
 import { create } from "zustand";
 
 type ModalType =
@@ -6,12 +6,14 @@ type ModalType =
   | "editPost"
   | "deletePost"
   | "replyPost"
-  | "mutePost";
+  | "mutePost"
+  | "followUser";
 
 interface ModalStoreData {
   profile?: ProfileWithAll;
   confirm?: boolean;
   post?: PostWithAll;
+  data?: PostWithAll | ReplyWithAll;
 }
 
 interface UseModalStore {

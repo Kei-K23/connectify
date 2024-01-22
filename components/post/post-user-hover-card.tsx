@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useTransition } from "react";
 
 import {
   HoverCard,
@@ -11,6 +11,8 @@ import { Follow, Profile } from "@prisma/client";
 import { Button } from "../ui/button";
 import { UserPlusIcon } from "lucide-react";
 import { PostWithAll, ReplyWithAll } from "@/type";
+import { followToggle } from "@/actions/follow-action";
+import { toast } from "sonner";
 
 interface PostUserHoverCardProps<T extends PostWithAll | ReplyWithAll> {
   profile: Profile & {
@@ -24,7 +26,22 @@ const PostUserHoverCard = <T extends PostWithAll | ReplyWithAll>({
   profile,
   data,
 }: PostUserHoverCardProps<T>) => {
+  const [isPending, startTransition] = useTransition();
   const otherProfile = data.profile.username !== profile.username;
+  const isAlreadyFollow = profile.followers.some(
+    (f) => f.followingId === data.profileId
+  );
+
+  function onClick() {
+    startTransition(() => {
+      followToggle({ followingId: data.profileId, postId: data.id })
+        .then((d) => {
+          toast.success(`${d.status} ${data.profile.username}`);
+        })
+        .catch(() => toast.error("Something went wrong"));
+    });
+  }
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -52,7 +69,7 @@ const PostUserHoverCard = <T extends PostWithAll | ReplyWithAll>({
         <div className="space-y-1 mt-4">
           <h3 className="text-base text-muted-foreground">
             {data.profile.followers.length}{" "}
-            {data.profile.followings.length ? "followings" : "following"}
+            {data.profile.followers.length ? "followings" : "following"}
           </h3>
           <h3 className="text-base text-muted-foreground">
             {data.profile.followings.length}{" "}
@@ -60,8 +77,19 @@ const PostUserHoverCard = <T extends PostWithAll | ReplyWithAll>({
           </h3>
         </div>
         {otherProfile && (
-          <Button className="mt-2 w-full flex items-center gap-x-2 font-bold">
-            <UserPlusIcon className="w-5 h-5" /> Follow
+          <Button
+            disabled={isPending}
+            onClick={onClick}
+            variant={isAlreadyFollow ? "outline" : "default"}
+            className="mt-2 w-full flex items-center gap-x-2 font-bold"
+          >
+            {isAlreadyFollow ? (
+              <>Following</>
+            ) : (
+              <>
+                <UserPlusIcon className="w-5 h-5" /> Follow
+              </>
+            )}
           </Button>
         )}
       </HoverCardContent>

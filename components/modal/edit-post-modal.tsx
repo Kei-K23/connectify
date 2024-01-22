@@ -20,7 +20,7 @@ import { Loader2 } from "lucide-react";
 const EditPostModal = () => {
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, onClose, data } = useModalStore();
-  const post = data?.post;
+  const post = data?.data;
   const [imageUrl, setImageUrl] = useState<string>(post?.imageUrl!);
   const [content, setContent] = useState<string>(post?.content!);
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);

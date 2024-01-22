@@ -6,13 +6,17 @@ export async function getAllPosts() {
     const profile = await getCurrentUser();
     return await db.post.findMany({
       where: {
-        mutes: {
-          every: {
-            NOT: {
-              profileId: profile?.id,
+        AND: [
+          {
+            mutes: {
+              every: {
+                NOT: {
+                  profileId: profile?.id,
+                },
+              },
             },
           },
-        },
+        ],
       },
       orderBy: {
         updatedAt: "desc",
@@ -40,13 +44,37 @@ export async function getPostById(id: string) {
     return await db.post.findUnique({
       where: {
         id,
-        mutes: {
-          every: {
-            NOT: {
-              profileId: profile?.id,
+        AND: [
+          {
+            mutes: {
+              every: {
+                NOT: {
+                  profileId: profile?.id,
+                },
+              },
             },
           },
-        },
+          {
+            profile: {
+              OR: [
+                {
+                  blockers: {
+                    some: {
+                      blockerId: profile?.id,
+                    },
+                  },
+                },
+                {
+                  blockings: {
+                    some: {
+                      blockingId: profile?.id,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
       include: {
         profile: {

@@ -32,6 +32,17 @@ export async function followToggle({
       throw new Error("Could not find the post!");
     }
 
+    const existingBlock = await db.block.findFirst({
+      where: {
+        blockingId: followingId,
+        blockerId: profile.id,
+      },
+    });
+
+    if (existingBlock) {
+      throw new Error("Could not follow! User has been blocked.");
+    }
+
     if (!existingFollow) {
       // follow the user
       await db.follow.create({
@@ -61,3 +72,24 @@ export async function followToggle({
     throw new Error("Something went wrong");
   }
 }
+
+// {
+//         profile: {
+//           OR: [
+//             {
+//               blockers: {
+//                 some: {
+//                   blockerId: profile?.id,
+//                 },
+//               },
+//             },
+//             {
+//               blockings: {
+//                 some: {
+//                   blockingId: profile?.id,
+//                 },
+//               },
+//             },
+//           ],
+//         },
+//       },

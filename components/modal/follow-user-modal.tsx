@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { followToggle } from "@/actions/follow-action";
 import { UserAvatar } from "../user-avatar";
 import { Button } from "../ui/button";
-import { UserPlusIcon } from "lucide-react";
+import { UserPlusIcon, UserX2Icon } from "lucide-react";
+import { blockToggle } from "@/actions/block-action";
 
 const FollowUserModal = () => {
   const [isPending, startTransition] = useTransition();
@@ -27,9 +28,20 @@ const FollowUserModal = () => {
 
   const otherProfile = post?.profile.username !== profile?.username;
 
-  function onClick() {
+  function onFollowClick() {
     startTransition(() => {
       followToggle({ followingId: post?.profileId!, postId: post?.id! })
+        .then((d) => {
+          toast.success(`${d.status} ${post?.profile.username}`);
+          onClose();
+        })
+        .catch(() => toast.error("Something went wrong"));
+    });
+  }
+
+  function onBlockClick() {
+    startTransition(() => {
+      blockToggle({ blockingId: post?.profileId!, postId: post?.id! })
         .then((d) => {
           toast.success(`${d.status} ${post?.profile.username}`);
           onClose();
@@ -70,7 +82,7 @@ const FollowUserModal = () => {
         {otherProfile && (
           <Button
             disabled={isPending}
-            onClick={onClick}
+            onClick={onFollowClick}
             variant={isAlreadyFollow ? "outline" : "default"}
             className="mt-2 w-full flex items-center gap-x-2 font-bold"
           >
@@ -81,6 +93,16 @@ const FollowUserModal = () => {
                 <UserPlusIcon className="w-5 h-5" /> Follow
               </>
             )}
+          </Button>
+        )}
+        {otherProfile && isAlreadyFollow && (
+          <Button
+            disabled={isPending}
+            variant={"destructive"}
+            className="mt-2 w-full flex items-center gap-x-2 font-bold"
+            onClick={onBlockClick}
+          >
+            <UserX2Icon className="w-5 h-5" /> Block
           </Button>
         )}
       </DialogContent>

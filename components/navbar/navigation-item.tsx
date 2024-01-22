@@ -16,7 +16,7 @@ interface NavigationItemProps {
 }
 
 const NavigationItem = ({ item, pathname }: NavigationItemProps) => {
-  const isActive = pathname === item.href;
+  const isActive = pathname === item.href || item.label === "Back to Main page";
   const Icon = item.icon;
 
   if (item.callback) {

@@ -1,18 +1,28 @@
 "use client";
-import { Heart, Home, Search, SquarePenIcon, User } from "lucide-react";
+import {
+  ArrowBigLeft,
+  Heart,
+  Home,
+  Search,
+  SquarePenIcon,
+  User,
+} from "lucide-react";
 import React from "react";
 import NavigationItem from "./navigation-item";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useModalStore } from "@/store/modal-store";
-import { ProfileWithPosts } from "@/type";
+import { ProfileWithAll } from "@/type";
 
 interface NavigationProps {
-  profile: ProfileWithPosts;
+  profile: ProfileWithAll;
 }
 
 const Navigation = ({ profile }: NavigationProps) => {
   const { onOpen } = useModalStore();
   const pathname = usePathname();
+  const params = useParams();
+  const isInsidePostIdPage =
+    `/${params?.username}/posts/${params?.postId}` === pathname;
 
   const navigation = [
     {
@@ -49,6 +59,15 @@ const Navigation = ({ profile }: NavigationProps) => {
       icon: User,
     },
   ];
+
+  if (isInsidePostIdPage) {
+    navigation.unshift({
+      href: "/",
+      label: "Back to Main page",
+      icon: ArrowBigLeft,
+    });
+  }
+
   return (
     <div className="flex items-center gap-x-4">
       {navigation.map((n) => (

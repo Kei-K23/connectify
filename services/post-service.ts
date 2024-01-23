@@ -16,6 +16,26 @@ export async function getAllPosts() {
               },
             },
           },
+          {
+            profile: {
+              OR: [
+                {
+                  blockers: {
+                    some: {
+                      blockerId: profile?.id,
+                    },
+                  },
+                },
+                {
+                  blockings: {
+                    some: {
+                      blockingId: profile?.id,
+                    },
+                  },
+                },
+              ],
+            },
+          },
         ],
       },
       orderBy: {

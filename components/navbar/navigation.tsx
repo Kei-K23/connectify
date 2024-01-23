@@ -54,7 +54,7 @@ const Navigation = ({ profile }: NavigationProps) => {
       icon: Heart,
     },
     {
-      href: "/profile",
+      href: `/${profile.username}`,
       label: "Profile",
       icon: User,
     },

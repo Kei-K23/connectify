@@ -4,10 +4,10 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
-import Navbar from "@/components/navbar";
 import ModalProvider from "@/provider/modal-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
+import QueryProvider from "@/provider/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,9 +35,11 @@ export default function RootLayout({
             forcedTheme="dark"
             storageKey="connectify-theme"
           >
-            {children}
-            <Toaster />
-            <ModalProvider />
+            <QueryProvider>
+              {children}
+              <Toaster />
+              <ModalProvider />
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>

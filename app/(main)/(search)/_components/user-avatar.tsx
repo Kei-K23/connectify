@@ -8,15 +8,9 @@ interface UserAvatarProps {
   name: string;
   src?: string | null;
   className?: string;
-  profile?: Profile;
 }
 
-export const UserAvatar = ({
-  name,
-  src,
-  className,
-  profile,
-}: UserAvatarProps) => {
+export const UserAvatar = ({ name, src, className }: UserAvatarProps) => {
   if (!src) {
     return (
       <div className="relative">

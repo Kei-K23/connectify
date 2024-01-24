@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { currentUser, useUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 
 export async function getCurrentUser() {
   const user = await currentUser();
@@ -31,21 +31,90 @@ export async function getCurrentUser() {
   }
 }
 
-export async function useCurrentUser() {
-  const { user } = useUser();
+export async function getProfiles() {
+  const user = await currentUser();
 
   if (!user || !user.username) {
-    throw new Error("User is not login!");
+    return;
   }
 
   try {
-    const profile = await db.profile.findUnique({
+    const profile = await db.profile.findMany({
+      // where: {
+      //   AND: [
+      //     {
+      //       NOT: {
+      //         OR: [
+      //           {
+      //             blockings: {
+      //               some: {
+      //                 blockerId: user?.id,
+      //               },
+      //             },
+      //           },
+      //           {
+      //             blockers: {
+      //               some: {
+      //                 blockingId: user?.id,
+      //               },
+      //             },
+      //           },
+      //         ],
+      //       },
+      //     },
+      //     {
+      //       NOT: {
+      //         followers: {
+      //           some: {
+      //             followerId: user?.id,
+      //           },
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
       where: {
-        externalUserId: user?.id,
-        username: user.username,
+        AND: [
+          {
+            NOT: {
+              OR: [
+                {
+                  blockings: {
+                    some: {
+                      blockerId: user?.id,
+                    },
+                  },
+                },
+                {
+                  blockers: {
+                    some: {
+                      blockingId: user?.id,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          {
+            NOT: {
+              followers: {
+                some: {
+                  followerId: user?.id,
+                },
+              },
+            },
+          },
+        ],
       },
       include: {
         posts: true,
+        followers: true,
+        followings: true,
+        likes: true,
+        blockers: true,
+        blockings: true,
+        replies: true,
+        mutes: true,
       },
     });
     return profile;

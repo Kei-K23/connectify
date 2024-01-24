@@ -6,6 +6,7 @@ import { BlockerWithBlocking } from "@/type";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { blockToggle } from "@/actions/block-action";
+import { useRouter } from "next/navigation";
 
 interface BlockUserItemProps {
   d: BlockerWithBlocking;
@@ -13,12 +14,14 @@ interface BlockUserItemProps {
 
 const BlockUserItem = ({ d }: BlockUserItemProps) => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   function onUnBlockClick() {
     startTransition(() => {
       blockToggle({ blockingId: d.blocking.id })
         .then((data) => {
           toast.success(`${data.status} ${d.blocking.username}`);
+          router.refresh();
         })
         .catch(() => toast.error("Something went wrong"));
     });

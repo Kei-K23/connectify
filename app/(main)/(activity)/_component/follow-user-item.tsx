@@ -6,6 +6,7 @@ import { FollowingWithFollower } from "@/type";
 import { Separator } from "@/components/ui/separator";
 import { followToggle } from "@/actions/follow-action";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface FollowUserItemProps {
   d: FollowingWithFollower;
@@ -13,12 +14,13 @@ interface FollowUserItemProps {
 
 const FollowUserItem = ({ d }: FollowUserItemProps) => {
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
   function onFollowClick() {
     startTransition(() => {
       followToggle({ followingId: d.follower.id })
         .then((data) => {
           toast.success(`${data.status} ${d.follower.username}`);
+          router.refresh();
         })
         .catch(() => toast.error("Something went wrong"));
     });

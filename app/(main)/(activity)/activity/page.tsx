@@ -6,7 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import {
   BlockerWithBlocking,
   FollowingWithFollower,
+  LikeWithProfileAndPost,
   MuteWithProfileAndPost,
+  ReplyWithProfileAndPost,
 } from "@/type";
 import BlockUserItem from "../_component/block-user-item";
 import FollowUserItem from "../_component/follow-user-item";
@@ -65,7 +67,7 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No mutes</h2>
           ) : (
             data?.data?.[0]?.mutes.map((d: MuteWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+              <PostActivityItem key={d.id} post={d.post} />
             ))
           )}
         </div>
@@ -75,8 +77,8 @@ const ActivityPage = () => {
           {data?.data?.[0]?.likes.length === 0 ? (
             <h2 className="text-muted-foreground text-center">No likes</h2>
           ) : (
-            data?.data?.[0]?.likes.map((d: MuteWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+            data?.data?.[0]?.likes.map((d: LikeWithProfileAndPost) => (
+              <PostActivityItem key={d.id} post={d.post} />
             ))
           )}
         </div>
@@ -86,8 +88,8 @@ const ActivityPage = () => {
           {data?.data?.[0]?.replies.length === 0 ? (
             <h2 className="text-muted-foreground text-center">No replies</h2>
           ) : (
-            data?.data?.[0]?.replies.map((d: MuteWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+            data?.data?.[0]?.replies.map((d: ReplyWithProfileAndPost) => (
+              <PostActivityItem key={d.id} post={d.post} />
             ))
           )}
         </div>

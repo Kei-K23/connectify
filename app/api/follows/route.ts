@@ -12,6 +12,28 @@ export async function GET() {
       },
       select: {
         followings: {
+          where: {
+            follower: {
+              NOT: {
+                OR: [
+                  {
+                    blockings: {
+                      some: {
+                        blockerId: profile?.id,
+                      },
+                    },
+                  },
+                  {
+                    blockers: {
+                      some: {
+                        blockingId: profile?.id,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
           include: {
             follower: true,
           },

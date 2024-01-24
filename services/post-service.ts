@@ -18,22 +18,24 @@ export async function getAllPosts() {
           },
           {
             profile: {
-              OR: [
-                {
-                  blockers: {
-                    some: {
-                      blockerId: profile?.id,
+              NOT: {
+                OR: [
+                  {
+                    blockings: {
+                      some: {
+                        blockerId: profile?.id,
+                      },
                     },
                   },
-                },
-                {
-                  blockings: {
-                    some: {
-                      blockingId: profile?.id,
+                  {
+                    blockers: {
+                      some: {
+                        blockingId: profile?.id,
+                      },
                     },
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         ],
@@ -76,22 +78,24 @@ export async function getPostById(id: string) {
           },
           {
             profile: {
-              OR: [
-                {
-                  blockers: {
-                    some: {
-                      blockerId: profile?.id,
+              NOT: {
+                OR: [
+                  {
+                    blockings: {
+                      some: {
+                        blockerId: profile?.id,
+                      },
                     },
                   },
-                },
-                {
-                  blockings: {
-                    some: {
-                      blockingId: profile?.id,
+                  {
+                    blockers: {
+                      some: {
+                        blockingId: profile?.id,
+                      },
                     },
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         ],

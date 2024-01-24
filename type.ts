@@ -51,16 +51,16 @@ export type FollowingWithFollower = Follow & {
 };
 
 export type LikeWithProfileAndPost = Like & {
-  post: Post;
+  post: PostWithProfile;
   profile: Profile;
 };
 
 export type ReplyWithProfileAndPost = Reply & {
-  post: Post;
+  post: PostWithProfile;
   profile: Profile;
 };
 
 export type MuteWithProfileAndPost = Mute & {
-  post: Post;
+  post: PostWithProfile;
   profile: Profile;
 };

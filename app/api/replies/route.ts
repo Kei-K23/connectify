@@ -13,8 +13,11 @@ export async function GET() {
       select: {
         replies: {
           include: {
-            post: true,
-            profile: true,
+            post: {
+              include: {
+                profile: true,
+              },
+            },
           },
         },
       },

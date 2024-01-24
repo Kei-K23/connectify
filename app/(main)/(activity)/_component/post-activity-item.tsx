@@ -2,18 +2,17 @@
 import React from "react";
 import { UserAvatar } from "./user-avatar";
 import { Separator } from "@/components/ui/separator";
-import { Post, Profile } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { PostWithProfile } from "@/type";
 
 interface PostActivityItemProps {
-  profile: Profile;
-  post: Post;
+  post: PostWithProfile;
 }
 
-const PostActivityItem = ({ profile, post }: PostActivityItemProps) => {
+const PostActivityItem = ({ post }: PostActivityItemProps) => {
   const router = useRouter();
   function onClick() {
-    router.push(`/${profile.username}/posts/${post.id}`);
+    router.push(`/${post.profile.username}/posts/${post.id}`);
   }
   return (
     <>
@@ -22,9 +21,9 @@ const PostActivityItem = ({ profile, post }: PostActivityItemProps) => {
         className="w-full flex items-center gap-x-2"
         onClick={onClick}
       >
-        <UserAvatar name={profile.username} src={profile.imageUrl} />
+        <UserAvatar name={post.profile.username} src={post.profile.imageUrl} />
         <div className="flex-1 flex flex-col items-start gap-y-1">
-          <h2>{profile.username}</h2>
+          <h2>{post.profile.username}</h2>
           <p className="truncate">{post.content}</p>
         </div>
       </div>

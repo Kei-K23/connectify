@@ -7,20 +7,27 @@ import { Separator } from "@/components/ui/separator";
 import { followToggle } from "@/actions/follow-action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface FollowUserItemProps {
   d: FollowingWithFollower;
+  activity: string;
 }
 
-const FollowUserItem = ({ d }: FollowUserItemProps) => {
+const FollowUserItem = ({ d, activity }: FollowUserItemProps) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   function onFollowClick() {
     startTransition(() => {
       followToggle({ followingId: d.follower.id })
         .then((data) => {
           toast.success(`${data.status} ${d.follower.username}`);
           router.refresh();
+          queryClient.invalidateQueries({
+            queryKey: ["activity", activity],
+          });
         })
         .catch(() => toast.error("Something went wrong"));
     });

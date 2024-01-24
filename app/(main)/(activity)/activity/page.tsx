@@ -28,7 +28,6 @@ const ActivityPage = () => {
       return response.json();
     },
   });
-  console.log(data, activity);
 
   return (
     <div>
@@ -44,7 +43,7 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No followers</h2>
           ) : (
             data?.data?.[0]?.followings.map((d: FollowingWithFollower) => (
-              <FollowUserItem key={d.id} d={d} />
+              <FollowUserItem key={d.id} d={d} activity={activity} />
             ))
           )}
         </div>
@@ -56,7 +55,7 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No blocks</h2>
           ) : (
             data?.data?.[0]?.blockers.map((d: BlockerWithBlocking) => (
-              <BlockUserItem key={d.id} d={d} />
+              <BlockUserItem key={d.id} d={d} activity={activity} />
             ))
           )}
         </div>

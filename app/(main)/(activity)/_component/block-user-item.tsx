@@ -7,14 +7,17 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { blockToggle } from "@/actions/block-action";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface BlockUserItemProps {
   d: BlockerWithBlocking;
+  activity: string;
 }
 
-const BlockUserItem = ({ d }: BlockUserItemProps) => {
+const BlockUserItem = ({ d, activity }: BlockUserItemProps) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   function onUnBlockClick() {
     startTransition(() => {
@@ -22,6 +25,9 @@ const BlockUserItem = ({ d }: BlockUserItemProps) => {
         .then((data) => {
           toast.success(`${data.status} ${d.blocking.username}`);
           router.refresh();
+          queryClient.invalidateQueries({
+            queryKey: ["activity", activity],
+          });
         })
         .catch(() => toast.error("Something went wrong"));
     });

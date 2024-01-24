@@ -116,6 +116,7 @@ export async function getPostById(id: string) {
   }
 }
 
+//! Have to retrieve correctly
 export async function getPostByNameAndProfileName(term: string) {
   try {
     const profile = await getCurrentUser();

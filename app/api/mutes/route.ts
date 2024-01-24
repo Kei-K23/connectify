@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const profile = await getCurrentUser();
 
-    const follows = await db.profile.findMany({
+    const data = await db.profile.findMany({
       where: {
         id: profile?.id,
       },
@@ -20,7 +20,7 @@ export async function GET() {
       },
     });
 
-    return new NextResponse(JSON.stringify(follows));
+    return new NextResponse(JSON.stringify({ data, type: "mutes" }));
   } catch (e: any) {
     return new NextResponse("Something went wrong!");
   }

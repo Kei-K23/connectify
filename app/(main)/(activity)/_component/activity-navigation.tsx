@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 
 interface ActivityNavigationProps {
-  setActivity: (activity: "Follows" | "Blocks" | "Mutes" | "Likes") => void;
+  setActivity: (
+    activity: "Follows" | "Blocks" | "Mutes" | "Likes" | "Replies"
+  ) => void;
   activity: string;
 }
 
@@ -33,6 +35,12 @@ const ActivityNavigation = ({
       label: "Likes",
       callback: () => {
         setActivity("Likes");
+      },
+    },
+    {
+      label: "Replies",
+      callback: () => {
+        setActivity("Replies");
       },
     },
   ];

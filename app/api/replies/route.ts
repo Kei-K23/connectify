@@ -11,15 +11,16 @@ export async function GET() {
         id: profile?.id,
       },
       select: {
-        blockers: {
+        replies: {
           include: {
-            blocking: true,
+            post: true,
+            profile: true,
           },
         },
       },
     });
 
-    return new NextResponse(JSON.stringify({ data, type: "blocks" }));
+    return new NextResponse(JSON.stringify({ data, type: "replies" }));
   } catch (e: any) {
     return new NextResponse("Something went wrong!");
   }

@@ -1,4 +1,5 @@
 import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
+import { Profile } from "@prisma/client";
 import { create } from "zustand";
 
 type ModalType =

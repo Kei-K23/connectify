@@ -12,6 +12,7 @@ export async function followToggle({
   postId: string;
 }) {
   try {
+    let post;
     const profile = await getCurrentUser();
     if (!profile) {
       throw new Error("Unauthorized user!");
@@ -24,12 +25,14 @@ export async function followToggle({
       },
     });
 
-    const post = await db.post.findUnique({
-      where: { id: postId },
-    });
+    if (postId) {
+      post = await db.post.findUnique({
+        where: { id: postId },
+      });
 
-    if (!post) {
-      throw new Error("Could not find the post!");
+      if (!post) {
+        throw new Error("Could not find the post!");
+      }
     }
 
     const existingBlock = await db.block.findFirst({
@@ -53,7 +56,9 @@ export async function followToggle({
       });
 
       revalidatePath("/");
-      revalidatePath(`/${profile.username}/posts/${post.id}`);
+      if (post) {
+        revalidatePath(`/${profile.username}/posts/${post.id}`);
+      }
       return { status: "Follow" };
     } else {
       // already follow then delete/unfollow the user
@@ -65,31 +70,12 @@ export async function followToggle({
       });
 
       revalidatePath("/");
-      revalidatePath(`/${profile.username}/posts/${post.id}`);
+      if (post) {
+        revalidatePath(`/${profile.username}/posts/${post.id}`);
+      }
       return { status: "Unfollow" };
     }
   } catch (e: any) {
     throw new Error("Something went wrong");
   }
 }
-
-// {
-//         profile: {
-//           OR: [
-//             {
-//               blockers: {
-//                 some: {
-//                   blockerId: profile?.id,
-//                 },
-//               },
-//             },
-//             {
-//               blockings: {
-//                 some: {
-//                   blockingId: profile?.id,
-//                 },
-//               },
-//             },
-//           ],
-//         },
-//       },

@@ -41,3 +41,16 @@ export type ReplyWithAll = Reply & {
     followings: Follow[];
   };
 };
+
+export type BlockerWithBlocking = Block & {
+  blocking: Profile;
+};
+
+//  select: {
+//       blockers: {
+//         include: {
+//           blocking: true,
+//         },
+//       },
+//     },
+//   });

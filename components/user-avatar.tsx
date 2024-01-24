@@ -5,7 +5,6 @@ import { PlusCircle, User, UserCircle2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
 import { useModalStore } from "@/store/modal-store";
-import { profile } from "console";
 
 interface UserAvatarProps<T extends PostWithAll | ReplyWithAll> {
   name: string;

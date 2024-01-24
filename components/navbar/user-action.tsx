@@ -17,6 +17,7 @@ const UserAction = () => {
           },
         },
       }}
+      afterSignOutUrl="/"
     />
   ) : (
     <div className="flex items-center justify-center w-[40px] h-[40px] rounded-full bg-black dark:bg-neutral-100 dark:text-black text-white">

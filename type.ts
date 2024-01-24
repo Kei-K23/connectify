@@ -46,11 +46,21 @@ export type BlockerWithBlocking = Block & {
   blocking: Profile;
 };
 
-//  select: {
-//       blockers: {
-//         include: {
-//           blocking: true,
-//         },
-//       },
-//     },
-//   });
+export type FollowingWithFollower = Follow & {
+  follower: Profile;
+};
+
+export type LikeWithProfileAndPost = Like & {
+  post: Post;
+  profile: Profile;
+};
+
+export type ReplyWithProfileAndPost = Reply & {
+  post: Post;
+  profile: Profile;
+};
+
+export type MuteWithProfileAndPost = Mute & {
+  post: Post;
+  profile: Profile;
+};

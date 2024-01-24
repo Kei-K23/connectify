@@ -3,10 +3,15 @@
 import React, { useState } from "react";
 import ActivityNavigation from "../_component/activity-navigation";
 import { useQuery } from "@tanstack/react-query";
-import { BlockerWithBlocking } from "@/type";
-import { UserAvatar } from "../_component/user-avatar";
-import { Button } from "@/components/ui/button";
+import {
+  BlockerWithBlocking,
+  FollowingWithFollower,
+  MuteWithProfileAndPost,
+} from "@/type";
 import BlockUserItem from "../_component/block-user-item";
+import FollowUserItem from "../_component/follow-user-item";
+import PostActivityItem from "../_component/post-activity-item";
+import { Loader } from "lucide-react";
 
 const ActivityPage = () => {
   const [activity, setActivity] = useState<
@@ -17,46 +22,76 @@ const ActivityPage = () => {
     queryKey: ["activity", activity],
     queryFn: async () => {
       const response = await fetch(`/api/${activity.toLowerCase()}`);
+
       return response.json();
     },
   });
+  console.log(data, activity);
 
   return (
     <div>
       <ActivityNavigation setActivity={setActivity} activity={activity} />
-      {status === "pending" && <h2>Loading...</h2>}
-      {data?.type === "follows" &&
-        data?.data?.[0]?.followings.map((d: any) => (
-          <div key={d?.id}>
-            {d.followerId} {d?.follwer?.username}
-          </div>
-        ))}
+      {status === "pending" && (
+        <div className="mt-8 w-full flex items-center justify-center">
+          <Loader className="w-7 h-7 animate-spin" />
+        </div>
+      )}
+      {data?.type === "follows" && (
+        <div className="mt-5 space-y-4">
+          {data?.data?.[0]?.followings.length === 0 ? (
+            <h2 className="text-muted-foreground text-center">No followers</h2>
+          ) : (
+            data?.data?.[0]?.followings.map((d: FollowingWithFollower) => (
+              <FollowUserItem key={d.id} d={d} />
+            ))
+          )}
+        </div>
+      )}
 
       {data?.type === "blocks" && (
         <div className="mt-5 space-y-4">
-          {data?.data?.[0]?.blockers.map((d: BlockerWithBlocking) => (
-            <BlockUserItem key={d.id} d={d} />
-          ))}
+          {data?.data?.[0]?.blockers.length === 0 ? (
+            <h2 className="text-muted-foreground text-center">No blocks</h2>
+          ) : (
+            data?.data?.[0]?.blockers.map((d: BlockerWithBlocking) => (
+              <BlockUserItem key={d.id} d={d} />
+            ))
+          )}
         </div>
       )}
-      {data?.type === "mutes" &&
-        data?.data?.[0]?.mutes.map((d: any) => (
-          <div key={d?.id}>
-            {d?.post?.content} {d?.profile?.username}
-          </div>
-        ))}
-      {data?.type === "likes" &&
-        data?.data?.[0]?.likes.map((d: any) => (
-          <div key={d?.id}>
-            {d?.post?.content} {d?.profile?.username}
-          </div>
-        ))}
-      {data?.type === "replies" &&
-        data?.data?.[0]?.replies.map((d: any) => (
-          <div key={d?.id}>
-            {d?.post?.content} {d?.profile?.username}
-          </div>
-        ))}
+      {data?.type === "mutes" && (
+        <div className="mt-5 space-y-4">
+          {data?.data?.[0]?.mutes.length === 0 ? (
+            <h2 className="text-muted-foreground text-center">No mutes</h2>
+          ) : (
+            data?.data?.[0]?.mutes.map((d: MuteWithProfileAndPost) => (
+              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+            ))
+          )}
+        </div>
+      )}
+      {data?.type === "likes" && (
+        <div className="mt-5 space-y-4">
+          {data?.data?.[0]?.likes.length === 0 ? (
+            <h2 className="text-muted-foreground text-center">No likes</h2>
+          ) : (
+            data?.data?.[0]?.likes.map((d: MuteWithProfileAndPost) => (
+              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+            ))
+          )}
+        </div>
+      )}
+      {data?.type === "replies" && (
+        <div className="mt-5 space-y-4">
+          {data?.data?.[0]?.replies.length === 0 ? (
+            <h2 className="text-muted-foreground text-center">No replies</h2>
+          ) : (
+            data?.data?.[0]?.replies.map((d: MuteWithProfileAndPost) => (
+              <PostActivityItem key={d.id} post={d.post} profile={d.profile} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };

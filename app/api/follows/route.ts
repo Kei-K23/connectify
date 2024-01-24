@@ -13,7 +13,7 @@ export async function GET() {
       select: {
         followings: {
           include: {
-            follwer: true,
+            follower: true,
           },
         },
       },

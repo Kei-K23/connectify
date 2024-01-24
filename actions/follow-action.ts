@@ -9,7 +9,7 @@ export async function followToggle({
   postId,
 }: {
   followingId: string;
-  postId: string;
+  postId?: string;
 }) {
   try {
     let post;
@@ -59,6 +59,7 @@ export async function followToggle({
       if (post) {
         revalidatePath(`/${profile.username}/posts/${post.id}`);
       }
+      revalidatePath("/activity");
       return { status: "Follow" };
     } else {
       // already follow then delete/unfollow the user
@@ -73,6 +74,7 @@ export async function followToggle({
       if (post) {
         revalidatePath(`/${profile.username}/posts/${post.id}`);
       }
+      revalidatePath("/activity");
       return { status: "Unfollow" };
     }
   } catch (e: any) {

@@ -9,9 +9,10 @@ export async function blockToggle({
   postId,
 }: {
   blockingId: string;
-  postId: string;
+  postId?: string;
 }) {
   try {
+    let post;
     const profile = await getCurrentUser();
     if (!profile) {
       throw new Error("Unauthorized user!");
@@ -35,12 +36,14 @@ export async function blockToggle({
       },
     });
 
-    const post = await db.post.findUnique({
-      where: { id: postId },
-    });
+    if (postId) {
+      post = await db.post.findUnique({
+        where: { id: postId },
+      });
 
-    if (!post) {
-      throw new Error("Could not find the post!");
+      if (!post) {
+        throw new Error("Could not find the post!");
+      }
     }
 
     if (!existingBlock) {
@@ -53,7 +56,10 @@ export async function blockToggle({
       });
 
       revalidatePath("/");
-      revalidatePath(`/${profile.username}/posts/${post.id}`);
+      if (post) {
+        revalidatePath(`/${profile.username}/posts/${post.id}`);
+      }
+      revalidatePath("/activity");
       return { status: "Block" };
     } else {
       // already block then delete/unblock the user
@@ -65,7 +71,10 @@ export async function blockToggle({
       });
 
       revalidatePath("/");
-      revalidatePath(`/${profile.username}/posts/${post.id}`);
+      if (post) {
+        revalidatePath(`/${profile.username}/posts/${post.id}`);
+      }
+      revalidatePath("/activity");
       return { status: "Unblock" };
     }
   } catch (e: any) {

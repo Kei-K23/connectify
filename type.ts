@@ -50,6 +50,10 @@ export type FollowingWithFollower = Follow & {
   follower: Profile;
 };
 
+export type FollowerWithFollowing = Follow & {
+  following: Profile;
+};
+
 export type LikeWithProfileAndPost = Like & {
   post: PostWithProfile;
   profile: Profile;

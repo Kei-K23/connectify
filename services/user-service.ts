@@ -104,3 +104,33 @@ export async function getProfiles() {
     throw new Error("User is not register!");
   }
 }
+
+export async function getFollowers(id: string) {
+  try {
+    return await db.follow.findMany({
+      where: {
+        followingId: id,
+      },
+      include: {
+        follower: true,
+      },
+    });
+  } catch (e: any) {
+    throw new Error("User is not register!");
+  }
+}
+
+export async function getFollowings(id: string) {
+  try {
+    return await db.follow.findMany({
+      where: {
+        followerId: id,
+      },
+      include: {
+        following: true,
+      },
+    });
+  } catch (e: any) {
+    throw new Error("User is not register!");
+  }
+}

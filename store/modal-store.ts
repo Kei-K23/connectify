@@ -1,4 +1,10 @@
-import { PostWithAll, ProfileWithAll, ReplyWithAll } from "@/type";
+import {
+  FollowerWithFollowing,
+  FollowingWithFollower,
+  PostWithAll,
+  ProfileWithAll,
+  ReplyWithAll,
+} from "@/type";
 import { Profile } from "@prisma/client";
 import { create } from "zustand";
 
@@ -9,13 +15,17 @@ type ModalType =
   | "replyPost"
   | "mutePost"
   | "followUser"
-  | "editProfile";
+  | "editProfile"
+  | "followersModal"
+  | "followingsModal";
 
 interface ModalStoreData {
   profile?: ProfileWithAll;
   confirm?: boolean;
   post?: PostWithAll;
   data?: PostWithAll | ReplyWithAll;
+  followings?: FollowerWithFollowing[];
+  followers?: FollowingWithFollower[];
 }
 
 interface UseModalStore {

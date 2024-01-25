@@ -1,8 +1,9 @@
 import {
   getCurrentUser,
   getCurrentUserByUsername,
+  getFollowers,
+  getFollowings,
 } from "@/services/user-service";
-import { notFound } from "next/navigation";
 import React from "react";
 import ProfileHeader from "./_components/profile-header";
 import { getPostByProfileId } from "@/services/post-service";
@@ -17,8 +18,9 @@ interface ProfilePageProps {
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
   const profile = await getCurrentUserByUsername(params.username);
-
   const currentUser = await getCurrentUser();
+  const followers = await getFollowers(currentUser?.id!);
+  const followings = await getFollowings(currentUser?.id!);
 
   const isAlreadyFollow = currentUser?.followers.some(
     (f) => f.followingId === profile?.id
@@ -31,6 +33,8 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   return (
     <div>
       <ProfileHeader
+        followings={followings}
+        followers={followers}
         profile={profile!}
         otherProfile={otherProfile}
         isAlreadyFollow={isAlreadyFollow!}

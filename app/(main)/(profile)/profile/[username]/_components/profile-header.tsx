@@ -1,7 +1,11 @@
 "use client";
 import React, { MouseEvent, useTransition } from "react";
 import { ProfileAvatar } from "./profile-avatar";
-import { ProfileWithAll } from "@/type";
+import {
+  FollowerWithFollowing,
+  FollowingWithFollower,
+  ProfileWithAll,
+} from "@/type";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,16 +20,23 @@ interface ProfileHeaderProps {
   profile: ProfileWithAll;
   otherProfile: boolean;
   isAlreadyFollow: boolean;
+  followings: FollowerWithFollowing[];
+  followers: FollowingWithFollower[];
 }
 
 const ProfileHeader = ({
   profile,
   otherProfile,
   isAlreadyFollow,
+  followers,
+  followings,
 }: ProfileHeaderProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { onOpen } = useModalStore();
+
+  const followersLen = profile.followers.length;
+  const followingsLen = profile.followings.length;
 
   function onClick() {
     if (profile.link) {
@@ -38,6 +49,22 @@ const ProfileHeader = ({
       type: "editProfile",
       data: {
         profile,
+      },
+    });
+  }
+  function onClickFollowersModal() {
+    onOpen({
+      type: "followersModal",
+      data: {
+        followings,
+      },
+    });
+  }
+  function onClickFollowingsModal() {
+    onOpen({
+      type: "followingsModal",
+      data: {
+        followers,
       },
     });
   }
@@ -88,13 +115,19 @@ const ProfileHeader = ({
       </div>
 
       <div className="space-y-1 my-4">
-        <h3 className="text-base text-muted-foreground">
-          {profile.followers.length}{" "}
-          {profile.followers.length ? "followings" : "following"}
+        <h3
+          onClick={onClickFollowersModal}
+          role={followersLen ? "button" : "heading"}
+          className={cn("text-base text-muted-foreground")}
+        >
+          {followersLen} {followersLen ? "followings" : "following"}
         </h3>
-        <h3 className="text-base text-muted-foreground">
-          {profile.followings.length}{" "}
-          {profile.followings.length ? "followers" : "follower"}
+        <h3
+          onClick={onClickFollowingsModal}
+          role={followingsLen ? "button" : "heading"}
+          className={cn("text-base text-muted-foreground")}
+        >
+          {followingsLen} {followingsLen ? "followers" : "follower"}
         </h3>
       </div>
       {otherProfile && (

@@ -21,7 +21,6 @@ const EditProfileModal = () => {
   const { isOpen, type, onClose, data } = useModalStore();
 
   const profile = data?.profile;
-  console.log(profile);
 
   const [bio, setBio] = useState<string>(profile?.bio!);
   const [link, setLink] = useState<string>(profile?.link!);

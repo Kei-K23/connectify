@@ -14,7 +14,6 @@ export async function getFollows() {
       },
     });
 
-    console.log(follows);
     return follows;
   } catch (e: any) {
     throw new Error("Internal server error!");

@@ -22,7 +22,8 @@ const Navigation = ({ profile }: NavigationProps) => {
   const pathname = usePathname();
   const params = useParams();
   const isInsidePostIdPage =
-    `/${params?.username}/posts/${params?.postId}` === pathname;
+    `/profile/${params?.username}/posts/${params?.postId}` === pathname ||
+    pathname !== `/profile/${profile?.username}`;
 
   const navigation = [
     {

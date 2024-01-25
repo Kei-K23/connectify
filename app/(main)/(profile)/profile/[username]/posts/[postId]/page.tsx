@@ -25,22 +25,24 @@ const PostIdPage = async ({ params }: PostIdPageProps) => {
     <>
       <PostItem<PostWithAll> data={post} profile={profile!} />
       {/* TODO: Render replay for post */}
-      {replies.length && (
-        <h2 className="text-center text-muted-foreground mt-4">Reply</h2>
-      )}
+
       {replies.length ? (
-        <div className="space-y-8 mt-4">
-          {replies.map((reply) => (
-            <PostItem<ReplyWithAll>
-              key={reply.id}
-              data={reply}
-              profile={profile!}
-              showActions={false}
-              showStatus={false}
-              allowRouting={false}
-            />
-          ))}
-        </div>
+        <>
+          <h2 className="text-center text-muted-foreground mt-4">Reply</h2>
+
+          <div className="space-y-8 mt-4">
+            {replies.map((reply) => (
+              <PostItem<ReplyWithAll>
+                key={reply.id}
+                data={reply}
+                profile={profile!}
+                showActions={false}
+                showStatus={false}
+                allowRouting={false}
+              />
+            ))}
+          </div>
+        </>
       ) : (
         <h2 className="text-center text-muted-foreground mt-4">No replies.</h2>
       )}

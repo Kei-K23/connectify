@@ -9,6 +9,8 @@ const PostItemBodyStatus = <T extends PostWithAll | ReplyWithAll>({
   data,
 }: PostItemBodyStatusProps<T>) => {
   let replayLabel, likeLabel;
+  const isEdited = new Date(data.updatedAt) > new Date(data.createdAt);
+
   if ("replies" in data) {
     replayLabel =
       data.replies.length > 1
@@ -26,7 +28,7 @@ const PostItemBodyStatus = <T extends PostWithAll | ReplyWithAll>({
   return (
     <div className="mt-3">
       <p className="text-muted-foreground">
-        {likeLabel} . {replayLabel}
+        {likeLabel} . {replayLabel} {isEdited && "(edited)"}
       </p>
     </div>
   );

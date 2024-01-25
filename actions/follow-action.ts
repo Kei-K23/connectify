@@ -60,6 +60,7 @@ export async function followToggle({
         revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
       revalidatePath("/activity");
+      revalidatePath("/search");
       return { status: "Follow" };
     } else {
       // already follow then delete/unfollow the user
@@ -75,6 +76,7 @@ export async function followToggle({
         revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
       revalidatePath("/activity");
+      revalidatePath("/search");
       return { status: "Unfollow" };
     }
   } catch (e: any) {

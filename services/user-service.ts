@@ -66,30 +66,21 @@ export async function getProfiles() {
       where: {
         AND: [
           {
-            NOT: {
-              OR: [
-                {
-                  blockings: {
-                    some: {
-                      blockerId: user?.id,
-                    },
-                  },
-                },
-                {
-                  blockers: {
-                    some: {
-                      blockingId: user?.id,
-                    },
-                  },
-                },
-              ],
+            externalUserId: {
+              not: user.id,
+            },
+            username: {
+              not: user.username,
             },
           },
           {
             NOT: {
-              followers: {
+              followings: {
                 some: {
-                  followerId: user?.id,
+                  follower: {
+                    externalUserId: user.id,
+                    username: user.username,
+                  },
                 },
               },
             },
@@ -107,6 +98,7 @@ export async function getProfiles() {
         mutes: true,
       },
     });
+
     return profile;
   } catch (e: any) {
     throw new Error("User is not register!");

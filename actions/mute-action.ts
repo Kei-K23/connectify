@@ -15,22 +15,8 @@ export async function muteToggle(postId: string) {
       where: { id: postId },
     });
 
-    const muteOwnPost = await db.post.findFirst({
-      where: {
-        mutes: {
-          some: {
-            profileId: profile.id,
-          },
-        },
-      },
-    });
-
     if (!post) {
       throw new Error("Could not find the post!");
-    }
-
-    if (muteOwnPost) {
-      throw new Error("Could not mute your own post!");
     }
 
     const existingMute = await db.mute.findFirst({
@@ -50,7 +36,7 @@ export async function muteToggle(postId: string) {
       });
     } else {
       // existing muted post then delete the mute and unmute the post
-      await db.like.delete({
+      await db.mute.delete({
         where: {
           id: existingMute.id,
         },
@@ -60,6 +46,8 @@ export async function muteToggle(postId: string) {
     revalidatePath("/");
     revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
   } catch (e: any) {
+    console.log(e);
+
     throw new Error("Something went wrong");
   }
 }

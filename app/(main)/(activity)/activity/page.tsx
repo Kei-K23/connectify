@@ -14,6 +14,7 @@ import BlockUserItem from "../_component/block-user-item";
 import FollowUserItem from "../_component/follow-user-item";
 import PostActivityItem from "../_component/post-activity-item";
 import { Loader } from "lucide-react";
+import PostMuteItem from "../_component/post-mute-item";
 
 const ActivityPage = () => {
   const [activity, setActivity] = useState<
@@ -66,7 +67,13 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No mutes</h2>
           ) : (
             data?.data?.[0]?.mutes.map((d: MuteWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} />
+              <PostMuteItem
+                activity={activity}
+                key={d.id}
+                post={d.post}
+                data={d}
+                allowRouting={false}
+              />
             ))
           )}
         </div>
@@ -77,7 +84,11 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No likes</h2>
           ) : (
             data?.data?.[0]?.likes.map((d: LikeWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} />
+              <PostActivityItem
+                key={d.id}
+                post={d.post}
+                createdAt={d.createdAt}
+              />
             ))
           )}
         </div>
@@ -88,7 +99,11 @@ const ActivityPage = () => {
             <h2 className="text-muted-foreground text-center">No replies</h2>
           ) : (
             data?.data?.[0]?.replies.map((d: ReplyWithProfileAndPost) => (
-              <PostActivityItem key={d.id} post={d.post} />
+              <PostActivityItem
+                key={d.id}
+                post={d.post}
+                createdAt={d.createdAt}
+              />
             ))
           )}
         </div>

@@ -35,7 +35,7 @@ const PostItemHeader = <T extends PostWithAll | ReplyWithAll>({
           </div>
           <div className="flex items-center gap-x-2">
             <p className="text-muted-foreground">
-              {formatDistanceToNow(data.createdAt, { addSuffix: true })}
+              {formatDistanceToNow(data.createdAt)}
             </p>
             <PostItemActions data={data} profile={profile} />
           </div>

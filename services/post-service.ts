@@ -157,6 +157,9 @@ export async function getPostByProfileId(id: string) {
           },
         ],
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
       include: {
         profile: {
           include: {

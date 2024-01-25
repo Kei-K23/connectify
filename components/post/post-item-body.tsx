@@ -27,7 +27,7 @@ const PostItemBody = <T extends PostWithAll | ReplyWithAll>({
     <div
       onClick={() =>
         allowRouting &&
-        router.push(`/${data.profile.username}/posts/${data.id}`)
+        router.push(`/profile/${data.profile.username}/posts/${data.id}`)
       }
       className="w-full cursor-pointer"
     >

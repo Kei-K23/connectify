@@ -8,13 +8,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useModalStore } from "@/store/modal-store";
-import { UserAvatar } from "../user-avatar";
 import { Input } from "../ui/input";
-import ImageUploadBtn from "../image-upload-btn";
 import { Button } from "../ui/button";
-import { editPost } from "@/actions/post-action";
 import { toast } from "sonner";
-import VerticalSeparator from "../vertical-separator";
 import { Loader2 } from "lucide-react";
 import { editProfile } from "@/actions/profile-action";
 import { Label } from "../ui/label";

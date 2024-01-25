@@ -12,12 +12,52 @@ export async function GET() {
       },
       select: {
         replies: {
+          where: {
+            post: {
+              AND: [
+                {
+                  mutes: {
+                    every: {
+                      NOT: {
+                        profileId: profile?.id,
+                      },
+                    },
+                  },
+                },
+                {
+                  profile: {
+                    NOT: {
+                      OR: [
+                        {
+                          blockings: {
+                            some: {
+                              blockerId: profile?.id,
+                            },
+                          },
+                        },
+                        {
+                          blockers: {
+                            some: {
+                              blockingId: profile?.id,
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
           include: {
             post: {
               include: {
                 profile: true,
               },
             },
+          },
+          orderBy: {
+            createdAt: "desc",
           },
         },
       },

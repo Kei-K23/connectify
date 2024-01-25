@@ -10,6 +10,7 @@ import { followToggle } from "@/actions/follow-action";
 import { toast } from "sonner";
 import { UserPlusIcon, UserX2Icon } from "lucide-react";
 import { blockToggle } from "@/actions/block-action";
+import { useModalStore } from "@/store/modal-store";
 
 interface ProfileHeaderProps {
   profile: ProfileWithAll;
@@ -24,11 +25,21 @@ const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const { onOpen } = useModalStore();
 
   function onClick() {
     if (profile.link) {
       router.push(profile.link);
     }
+  }
+
+  function onClickEditModal() {
+    onOpen({
+      type: "editProfile",
+      data: {
+        profile,
+      },
+    });
   }
 
   function onFollowClick(e: MouseEvent<HTMLButtonElement>) {
@@ -113,7 +124,11 @@ const ProfileHeader = ({
         </Button>
       )}
       {!otherProfile && (
-        <Button className="w-full border-2 rounded-xl" variant={"outline"}>
+        <Button
+          className="w-full border-2 rounded-xl"
+          variant={"outline"}
+          onClick={onClickEditModal}
+        >
           Edit Profile
         </Button>
       )}

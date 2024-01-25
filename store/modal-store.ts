@@ -8,7 +8,8 @@ type ModalType =
   | "deletePost"
   | "replyPost"
   | "mutePost"
-  | "followUser";
+  | "followUser"
+  | "editProfile";
 
 interface ModalStoreData {
   profile?: ProfileWithAll;

@@ -2,6 +2,7 @@
 import CreatePostModal from "@/components/modal/create-post-modal";
 import DeletePostModal from "@/components/modal/delete-post-modal";
 import EditPostModal from "@/components/modal/edit-post-modal";
+import EditProfileModal from "@/components/modal/edit-profile-modal";
 import FollowUserModal from "@/components/modal/follow-user-modal";
 import MutePostModal from "@/components/modal/mute-post-modal";
 import PostReplyModal from "@/components/modal/post-reply-modal";
@@ -26,6 +27,7 @@ const ModalProvider = () => {
       <PostReplyModal />
       <MutePostModal />
       <FollowUserModal />
+      <EditProfileModal />
     </>
   );
 };

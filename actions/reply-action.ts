@@ -37,7 +37,7 @@ export async function createReply({
     });
 
     revalidatePath("/");
-    revalidatePath(`/${profile.username}/posts/${post.id}`);
+    revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
 
     return reply;
   } catch (e: any) {

@@ -57,7 +57,7 @@ export async function blockToggle({
 
       revalidatePath("/");
       if (post) {
-        revalidatePath(`/${profile.username}/posts/${post.id}`);
+        revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
       revalidatePath("/activity");
       return { status: "Block" };
@@ -72,7 +72,7 @@ export async function blockToggle({
 
       revalidatePath("/");
       if (post) {
-        revalidatePath(`/${profile.username}/posts/${post.id}`);
+        revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
       revalidatePath("/activity");
       return { status: "Unblock" };

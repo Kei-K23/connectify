@@ -89,6 +89,8 @@ export async function deletePost({ id }: { id: string }) {
 
     return post;
   } catch (e: any) {
+    console.log(e);
+
     throw new Error("Something went wrong");
   }
 }

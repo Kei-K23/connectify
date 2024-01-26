@@ -95,7 +95,7 @@ model Reply {
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: NoAction)
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

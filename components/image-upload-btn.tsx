@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 interface ImageUploadBtnProps {
   imageUrl: string;
+  defaultImageUrl?: string;
   setImageUrl: (imageUrl: string) => void;
   setIsImageUploading: (value: boolean) => void;
 }
@@ -15,33 +16,36 @@ const ImageUploadBtn = ({
   imageUrl,
   setImageUrl,
   setIsImageUploading,
+  defaultImageUrl,
 }: ImageUploadBtnProps) => {
-  if (imageUrl) {
+  const image = imageUrl || defaultImageUrl;
+
+  if (image) {
     return (
-      <div className="relative w-full h-[250px] rounded-lg mt-4">
-        <Image src={imageUrl} alt="post image" className="rounded-lg" fill />
+      <div className="relative mt-4 h-[250px] w-full rounded-lg">
+        <Image src={image} alt="post image" className="rounded-lg" fill />
         <Button
-          className="absolute top-1 right-1 rounded-full px-2.5 bg-black/70 hover:bg-black/50 text-white"
+          className="absolute right-1 top-1 rounded-full bg-black/70 px-2.5 text-white hover:bg-black/50"
           onClick={() => setImageUrl("")}
         >
-          <XIcon className="w-5 h-5" />
+          <XIcon className="h-5 w-5" />
         </Button>
       </div>
     );
   }
 
-  if (!imageUrl) {
+  if (!image) {
     return (
       <UploadButton
         content={{
           button({ ready, isUploading }) {
             if (ready) {
-              return <ImageIcon className="w-5 h-5" />;
+              return <ImageIcon className="h-5 w-5" />;
             }
             if (isUploading) {
-              return <Loader2Icon className="w-5 h-5 animate-spin" />;
+              return <Loader2Icon className="h-5 w-5 animate-spin" />;
             }
-            return <Loader2Icon className="w-5 h-5 animate-spin" />;
+            return <Loader2Icon className="h-5 w-5 animate-spin" />;
           },
         }}
         appearance={{

@@ -53,7 +53,7 @@ const EditPostModal = () => {
         <DialogHeader>
           <DialogTitle className="text-center">Edit Post</DialogTitle>
         </DialogHeader>
-        <div className="relative flex flex-col gap-x-2 items-start">
+        <div className="relative flex flex-col items-start gap-x-2">
           <div className="flex items-center gap-x-2">
             <UserAvatar
               name={post?.profile.username}
@@ -61,7 +61,7 @@ const EditPostModal = () => {
             />
             <h2>{post?.profile.username}</h2>
           </div>
-          <div className="relative flex flex-col pl-11 w-full mt-2">
+          <div className="relative mt-2 flex w-full flex-col pl-11">
             <VerticalSeparator />
             <form className="w-full" onSubmit={onSubmit}>
               <Input
@@ -70,10 +70,11 @@ const EditPostModal = () => {
                 placeholder="Start a post..."
                 className="w-full bg-transparent focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0"
                 value={content}
-                defaultValue={post.content}
+                defaultValue={post?.content}
                 onChange={(e) => setContent(e.target.value)}
               />
               <ImageUploadBtn
+                defaultImageUrl={post?.imageUrl!}
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
                 setIsImageUploading={setIsImageUploading}
@@ -82,12 +83,12 @@ const EditPostModal = () => {
                 <Button
                   disabled={!content || isPending || isImageUploading}
                   type="submit"
-                  className="rounded-[32px] text-[15px] flex items-center gap-x-2"
+                  className="flex items-center gap-x-2 rounded-[32px] text-[15px]"
                 >
                   {isPending ? (
                     <>
                       <span>Saving...</span>
-                      <Loader2 className="w-4 h-5 text-muted-foreground animate-spin" />
+                      <Loader2 className="text-muted-foreground h-5 w-4 animate-spin" />
                     </>
                   ) : (
                     "Save"

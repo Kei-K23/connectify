@@ -2,7 +2,7 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
-import { MemberType } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_KEY;
@@ -50,7 +50,6 @@ export async function POST(req: Request) {
   }
 
   // Get the ID and type
-  const { id } = evt.data;
   const eventType = evt.type;
 
   if (eventType === "user.created") {
@@ -89,27 +88,7 @@ export async function POST(req: Request) {
         externalUserId: payload.data.id,
       },
     });
-  }
-
-  if (eventType === "organization.created") {
-    await db.group.create({
-      data: {
-        name: payload.data.name,
-        imageUrl: payload.data.image_url,
-        members: {
-          create: {
-            memberType: MemberType.ADMIN,
-            profileId: payload.data.created_by,
-          },
-        },
-      },
-    });
-  }
-
-  if (eventType === "organization.updated") {
-  }
-
-  if (eventType === "organization.deleted") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return new Response("", { status: 200 });

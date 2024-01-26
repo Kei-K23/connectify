@@ -47,8 +47,8 @@ const ActivityNavigation = ({
   ];
 
   return (
-    <div className="flex items-center justify-center w-full">
-      <ScrollArea className="w-full whitespace-nowrap flex items-center justify-center gap-x-3 mx-auto">
+    <div className="relative flex items-center justify-center w-full mx-auto ">
+      <ScrollArea className="w-full whitespace-nowrap flex items-center gap-x-3 mx-auto">
         {activities.map((a) => (
           <Button
             key={a.label}

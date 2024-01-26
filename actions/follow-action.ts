@@ -59,6 +59,7 @@ export async function followToggle({
       if (post) {
         revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
+      revalidatePath(`/profile/${profile.username}`);
       revalidatePath("/activity");
       revalidatePath("/search");
       return { status: "Follow" };
@@ -75,6 +76,7 @@ export async function followToggle({
       if (post) {
         revalidatePath(`/profile/${profile.username}/posts/${post.id}`);
       }
+      revalidatePath(`/profile/${profile.username}`);
       revalidatePath("/activity");
       revalidatePath("/search");
       return { status: "Unfollow" };

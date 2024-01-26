@@ -11,15 +11,14 @@ interface FollowUserItemProps {
   d: FollowerWithFollowing;
 }
 
-const FollowUserItem = ({ d }: FollowUserItemProps) => {
+const FollowerUserItem = ({ d }: FollowUserItemProps) => {
   const { onClose } = useModalStore();
   const router = useRouter();
 
   return (
     <>
-      <Button
-        variant={"outline"}
-        className="flex w-full justify-between items-center px-8 gap-x-2 h-16"
+      <div
+        className="cursor-pointer border flex w-full justify-between items-center px-8 gap-x-2 h-16"
         onClick={() => {
           router.push(`/profile/${d.following.username}`);
           onClose();
@@ -32,10 +31,10 @@ const FollowUserItem = ({ d }: FollowUserItemProps) => {
         <div className="flex-1 flex flex-col items-start gap-y-1">
           <h2>{d?.following?.username}</h2>
         </div>
-      </Button>
+      </div>
       <Separator className="w-full last:hidden" />
     </>
   );
 };
 
-export default FollowUserItem;
+export default FollowerUserItem;

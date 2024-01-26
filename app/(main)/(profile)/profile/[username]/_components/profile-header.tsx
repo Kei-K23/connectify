@@ -2,6 +2,7 @@
 import React, { MouseEvent, useTransition } from "react";
 import { ProfileAvatar } from "./profile-avatar";
 import {
+  BlockerWithBlocking,
   FollowerWithFollowing,
   FollowingWithFollower,
   ProfileWithAll,
@@ -18,10 +19,12 @@ import { useModalStore } from "@/store/modal-store";
 
 interface ProfileHeaderProps {
   profile: ProfileWithAll;
+  currentUser: ProfileWithAll;
   otherProfile: boolean;
   isAlreadyFollow: boolean;
   followings: FollowerWithFollowing[];
   followers: FollowingWithFollower[];
+  blockings: BlockerWithBlocking[];
 }
 
 const ProfileHeader = ({
@@ -30,6 +33,8 @@ const ProfileHeader = ({
   isAlreadyFollow,
   followers,
   followings,
+  currentUser,
+  blockings,
 }: ProfileHeaderProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -64,7 +69,10 @@ const ProfileHeader = ({
     onOpen({
       type: "followingsModal",
       data: {
+        profile: currentUser,
         followers,
+        blockings,
+        followings,
       },
     });
   }
@@ -97,7 +105,7 @@ const ProfileHeader = ({
     <div>
       <div className="flex justify-between space-x-4">
         <div className="space-y-2">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg md:text-xl font-semibold">
             {profile.name} {!otherProfile && "(You)"}
           </h2>
           <h3 className="text-base ">{profile.username}</h3>

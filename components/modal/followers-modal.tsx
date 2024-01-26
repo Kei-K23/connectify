@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { useModalStore } from "@/store/modal-store";
 import { FollowerWithFollowing } from "@/type";
-import FollowUserItem from "@/app/(main)/(profile)/profile/[username]/_components/follower-usre.item";
 import { ScrollArea } from "../ui/scroll-area";
+import FollowerUserItem from "@/app/(main)/(profile)/profile/[username]/_components/follower-usre.item";
 
 const FollowersModal = () => {
   const { isOpen, type, onClose, data } = useModalStore();
@@ -22,8 +22,6 @@ const FollowersModal = () => {
     return null;
   }
 
-  console.log(followers);
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
@@ -32,10 +30,10 @@ const FollowersModal = () => {
         </DialogHeader>
         <ScrollArea className="mt-5 space-y-4 max-h-[400px] ">
           {followers.length === 0 ? (
-            <h2 className="text-muted-foreground text-center">No followers</h2>
+            <h2 className="text-muted-foreground text-center">No followings</h2>
           ) : (
             followers.map((d: FollowerWithFollowing) => (
-              <FollowUserItem key={d.id} d={d} />
+              <FollowerUserItem key={d.id} d={d} />
             ))
           )}
         </ScrollArea>

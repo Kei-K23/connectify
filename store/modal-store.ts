@@ -1,4 +1,5 @@
 import {
+  BlockerWithBlocking,
   FollowerWithFollowing,
   FollowingWithFollower,
   PostWithAll,
@@ -26,6 +27,7 @@ interface ModalStoreData {
   data?: PostWithAll | ReplyWithAll;
   followings?: FollowerWithFollowing[];
   followers?: FollowingWithFollower[];
+  blockings?: BlockerWithBlocking[];
 }
 
 interface UseModalStore {

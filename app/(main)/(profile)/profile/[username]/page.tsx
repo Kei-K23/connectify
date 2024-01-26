@@ -1,4 +1,5 @@
 import {
+  getBlockings,
   getCurrentUser,
   getCurrentUserByUsername,
   getFollowers,
@@ -21,6 +22,7 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   const currentUser = await getCurrentUser();
   const followers = await getFollowers(currentUser?.id!);
   const followings = await getFollowings(currentUser?.id!);
+  const blockings = await getBlockings(currentUser?.id!);
 
   const isAlreadyFollow = currentUser?.followers.some(
     (f) => f.followingId === profile?.id
@@ -35,9 +37,11 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
       <ProfileHeader
         followings={followings}
         followers={followers}
+        blockings={blockings}
         profile={profile!}
         otherProfile={otherProfile}
         isAlreadyFollow={isAlreadyFollow!}
+        currentUser={currentUser!}
       />
 
       {posts.length ? (

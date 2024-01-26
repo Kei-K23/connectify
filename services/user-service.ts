@@ -120,6 +120,21 @@ export async function getFollowers(id: string) {
   }
 }
 
+export async function getBlockings(id: string) {
+  try {
+    return await db.block.findMany({
+      where: {
+        blockerId: id,
+      },
+      include: {
+        blocking: true,
+      },
+    });
+  } catch (e: any) {
+    throw new Error("User is not register!");
+  }
+}
+
 export async function getFollowings(id: string) {
   try {
     return await db.follow.findMany({

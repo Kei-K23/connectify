@@ -38,7 +38,7 @@ const PostActivityItem = ({
               {formatDistanceToNow(createdAt)}
             </span>
           </div>
-          <p className="truncate">{post.content}</p>
+          <p className="truncate w-[230px] overflow-x-auto">{post.content}</p>
         </div>
       </div>
       <Separator className="w-full last:hidden" />

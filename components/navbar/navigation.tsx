@@ -69,7 +69,7 @@ const Navigation = ({ profile }: NavigationProps) => {
   }
 
   return (
-    <div className="flex items-center gap-x-4">
+    <div className="hidden md:flex items-center gap-x-4">
       {navigation.map((n) => (
         <NavigationItem key={n.label} item={n} pathname={pathname} />
       ))}

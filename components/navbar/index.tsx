@@ -12,7 +12,7 @@ const Navbar = async () => {
       <nav className="bg-black/90 h-full flex items-center justify-between px-8 lg:px-32 xl:px-40 border-b ">
         <Logo />
         <Navigation profile={profile!} />
-        <UserAction />
+        <UserAction profile={profile!} />
       </nav>
     </header>
   );

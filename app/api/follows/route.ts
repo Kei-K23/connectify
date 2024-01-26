@@ -15,20 +15,31 @@ export async function GET() {
           where: {
             follower: {
               NOT: {
-                OR: [
+                AND: [
                   {
-                    blockings: {
-                      some: {
-                        blockerId: profile?.id,
+                    OR: [
+                      {
+                        blockings: {
+                          some: {
+                            blockerId: profile?.id,
+                          },
+                        },
                       },
-                    },
-                  },
-                  {
-                    blockers: {
-                      some: {
-                        blockingId: profile?.id,
+                      {
+                        blockers: {
+                          some: {
+                            blockingId: profile?.id,
+                          },
+                        },
                       },
-                    },
+                      {
+                        followings: {
+                          some: {
+                            followerId: profile?.id,
+                          },
+                        },
+                      },
+                    ],
                   },
                 ],
               },

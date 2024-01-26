@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 
 interface ActivityNavigationProps {
@@ -46,17 +47,21 @@ const ActivityNavigation = ({
   ];
 
   return (
-    <div className="w-full flex items-center justify-center gap-x-3">
-      {activities.map((a) => (
-        <Button
-          key={a.label}
-          size={"sm"}
-          variant={activity === a.label ? "default" : "outline"}
-          onClick={a.callback}
-        >
-          {a.label}
-        </Button>
-      ))}
+    <div className="flex items-center justify-center w-full">
+      <ScrollArea className="w-full whitespace-nowrap flex items-center justify-center gap-x-3 mx-auto">
+        {activities.map((a) => (
+          <Button
+            key={a.label}
+            size={"sm"}
+            variant={activity === a.label ? "default" : "outline"}
+            onClick={a.callback}
+            className="mx-1"
+          >
+            {a.label}
+          </Button>
+        ))}
+        <ScrollBar orientation="horizontal" className="hidden" />
+      </ScrollArea>
     </div>
   );
 };

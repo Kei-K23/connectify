@@ -35,7 +35,7 @@ const PostItemBody = <T extends PostWithAll | ReplyWithAll>({
         <VerticalSeparator />
         <p>{data.content}</p>
         {data.imageUrl && (
-          <div className="relative w-full h-[320px] rounded-lg mt-4 border-2 border-zinc-800">
+          <div className="relative w-full h-[200px] md:h-[320px] rounded-lg mt-4 border-2 border-zinc-800">
             <Image
               src={data.imageUrl}
               alt="post body image"

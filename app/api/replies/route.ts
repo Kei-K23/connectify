@@ -68,8 +68,6 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(JSON.stringify({ data, type: "replies" }));
   } catch (e: any) {
-    console.log(e);
-
-    return new NextResponse("Something went wrong!");
+    return new NextResponse(JSON.stringify({ error: e }));
   }
 }

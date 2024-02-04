@@ -22,6 +22,7 @@ const ActivityPage = () => {
     "Follows" | "Blocks" | "Mutes" | "Likes" | "Replies"
   >("Follows");
   const { user } = useUser();
+  console.log(user);
 
   const { data, status } = useQuery({
     queryKey: ["activity", activity],

@@ -45,6 +45,7 @@ const EditProfileModal = () => {
         .catch(() => toast.error("Something went wrong"));
     });
   }
+  console.log(profile.bio, profile.link);
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
@@ -60,10 +61,11 @@ const EditProfileModal = () => {
                 disabled={isPending}
                 placeholder="Explain about you"
                 id="bio"
-                defaultValue={profile.bio!}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-              ></Textarea>
+              >
+                {profile.bio}
+              </Textarea>
             </div>
             <div className="w-full space-y-2">
               <Label htmlFor="link">Social link</Label>

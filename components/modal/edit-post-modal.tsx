@@ -21,8 +21,8 @@ const EditPostModal = () => {
   const [isPending, startTransition] = useTransition();
   const { isOpen, type, onClose, data } = useModalStore();
   const post = data?.data;
-  const [imageUrl, setImageUrl] = useState<string>(post?.imageUrl!);
-  const [content, setContent] = useState<string>(post?.content!);
+  const [imageUrl, setImageUrl] = useState<string>(post?.imageUrl! || "");
+  const [content, setContent] = useState<string>(post?.content! || "");
   const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
 
   const isModalOpen = isOpen && type === "editPost";
@@ -36,7 +36,11 @@ const EditPostModal = () => {
     e.stopPropagation();
 
     startTransition(() => {
-      editPost({ content, imageUrl: imageUrl || null, id: post?.id! })
+      editPost({
+        content: content || post?.content!,
+        imageUrl: imageUrl || post?.imageUrl || null,
+        id: post?.id!,
+      })
         .then(() => {
           toast.success("Edited post");
           onClose();
@@ -69,19 +73,17 @@ const EditPostModal = () => {
                 disabled={isPending}
                 placeholder="Start a post..."
                 className="w-full bg-transparent focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0"
-                value={content}
-                defaultValue={post?.content}
+                value={content || post?.content}
                 onChange={(e) => setContent(e.target.value)}
               />
               <ImageUploadBtn
-                defaultImageUrl={post?.imageUrl!}
-                imageUrl={imageUrl}
+                imageUrl={imageUrl || post?.imageUrl!}
                 setImageUrl={setImageUrl}
                 setIsImageUploading={setIsImageUploading}
               />
               <DialogFooter className="mt-4">
                 <Button
-                  disabled={!content || isPending || isImageUploading}
+                  disabled={isPending || isImageUploading}
                   type="submit"
                   className="flex items-center gap-x-2 rounded-[32px] text-[15px]"
                 >

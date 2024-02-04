@@ -22,8 +22,8 @@ const EditProfileModal = () => {
 
   const profile = data?.profile;
 
-  const [bio, setBio] = useState<string>(profile?.bio!);
-  const [link, setLink] = useState<string>(profile?.link!);
+  const [bio, setBio] = useState<string>(profile?.bio! || "");
+  const [link, setLink] = useState<string>(profile?.link! || "");
 
   const isModalOpen = isOpen && type === "editProfile";
 
@@ -35,7 +35,7 @@ const EditProfileModal = () => {
     e.preventDefault();
 
     startTransition(() => {
-      editProfile({ bio, link })
+      editProfile({ bio: bio || profile?.bio!, link: link || profile?.link! })
         .then(() => {
           toast.success("Edited profile");
           onClose();
@@ -45,7 +45,6 @@ const EditProfileModal = () => {
         .catch(() => toast.error("Something went wrong"));
     });
   }
-  console.log(profile.bio, profile.link);
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
@@ -61,10 +60,10 @@ const EditProfileModal = () => {
                 disabled={isPending}
                 placeholder="Explain about you"
                 id="bio"
-                value={bio}
+                value={bio || profile?.bio!}
                 onChange={(e) => setBio(e.target.value)}
               >
-                {profile.bio}
+                {bio || profile?.bio}
               </Textarea>
             </div>
             <div className="w-full space-y-2">
@@ -74,8 +73,7 @@ const EditProfileModal = () => {
                 type="text"
                 placeholder="e.g https://github.com/Kei-K23"
                 id="link"
-                value={link}
-                defaultValue={profile.link!}
+                value={link || profile?.link!}
                 onChange={(e) => setLink(e.target.value)}
               />
             </div>

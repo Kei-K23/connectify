@@ -65,6 +65,8 @@ export async function GET() {
 
     return new NextResponse(JSON.stringify({ data, type: "replies" }));
   } catch (e: any) {
+    console.log(e);
+
     return new NextResponse("Something went wrong!");
   }
 }

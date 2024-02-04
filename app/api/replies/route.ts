@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { getCurrentUserByExternalUserID } from "@/services/user-service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -7,7 +6,15 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const profileId = url.searchParams.get("profileId");
 
-    const profile = await getCurrentUserByExternalUserID!(profileId!);
+    const profile = await db.profile.findFirst({
+      where: {
+        externalUserId: profileId!,
+      },
+    });
+
+    if (!profile) {
+      return new NextResponse(JSON.stringify({ error: "Profile not found" }));
+    }
 
     const data = await db.profile.findMany({
       where: {

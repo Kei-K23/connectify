@@ -15,16 +15,20 @@ import FollowUserItem from "../_component/follow-user-item";
 import PostActivityItem from "../_component/post-activity-item";
 import { Loader } from "lucide-react";
 import PostMuteItem from "../_component/post-mute-item";
+import { useUser } from "@clerk/nextjs";
 
 const ActivityPage = () => {
   const [activity, setActivity] = useState<
     "Follows" | "Blocks" | "Mutes" | "Likes" | "Replies"
   >("Follows");
+  const { user } = useUser();
 
   const { data, status } = useQuery({
     queryKey: ["activity", activity],
     queryFn: async () => {
-      const response = await fetch(`/api/${activity.toLowerCase()}`);
+      const response = await fetch(
+        `/api/${activity.toLowerCase()}?profileId=${user?.id}`
+      );
 
       return response.json();
     },

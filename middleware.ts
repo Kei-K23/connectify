@@ -5,11 +5,11 @@ export default authMiddleware({
   publicRoutes: [
     "/api/webhooks(.*)",
     "/api/uploadthing",
-    "/api/blocks",
-    "/api/follows",
-    "/api/likes",
-    "/api/mutes",
-    "/api/replies",
+    // "/api/blocks",
+    // "/api/follows",
+    // "/api/likes",
+    // "/api/mutes",
+    // "/api/replies",
   ],
 });
 

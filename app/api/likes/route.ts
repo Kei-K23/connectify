@@ -1,10 +1,13 @@
 import { db } from "@/lib/db";
-import { getCurrentUser } from "@/services/user-service";
-import { NextResponse } from "next/server";
+import { getCurrentUserByExternalUserID } from "@/services/user-service";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const profile = await getCurrentUser();
+    const url = new URL(req.url);
+    const profileId = url.searchParams.get("profileId");
+
+    const profile = await getCurrentUserByExternalUserID!(profileId!);
 
     const data = await db.profile.findMany({
       where: {

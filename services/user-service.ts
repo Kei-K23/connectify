@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 
 export async function getCurrentUser() {
   const user = await currentUser();
@@ -31,11 +31,56 @@ export async function getCurrentUser() {
   }
 }
 
+export async function authProfile() {
+  const { user } = auth();
+
+  if (!user) {
+    return null;
+  }
+
+  console.log(user, "current");
+
+  const profile = await db.profile.findUnique({
+    where: {
+      externalUserId: user?.id,
+      username: user?.username!,
+    },
+  });
+
+  if (!profile) {
+    return null;
+  }
+  return profile;
+}
+
 export async function getCurrentUserByUsername(username: string) {
   try {
     const profile = await db.profile.findUnique({
       where: {
         username,
+      },
+      include: {
+        posts: true,
+        followers: true,
+        followings: true,
+        likes: true,
+        blockers: true,
+        blockings: true,
+        replies: true,
+        mutes: true,
+      },
+    });
+    return profile;
+  } catch (e: any) {
+    throw new Error("User is not register!");
+  }
+}
+
+export async function getCurrentUserByExternalUserID(id: string) {
+  try {
+    const profile = await db.profile.findUnique({
+      where: {
+        externalUserId: id,
       },
       include: {
         posts: true,
